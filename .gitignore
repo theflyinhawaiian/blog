@@ -1,0 +1,20 @@
+# Secrets
+.env.local
+*.p8
+
+# Go
+backend/vendor/
+backend/*.exe
+backend/blog
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Docker
+*.log
+
+# IDE
+.idea/
+.vscode/
+*.swp
