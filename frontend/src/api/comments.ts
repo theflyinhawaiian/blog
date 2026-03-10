@@ -1,8 +1,9 @@
 import { Comment, Reaction } from '../types/comment'
 import { apiFetch } from './client'
 
-export function fetchComments(slug: string): Promise<Comment[]> {
-  return apiFetch<Comment[]>(`/api/posts/${slug}/comments`)
+export async function fetchComments(slug: string): Promise<Comment[]> {
+  const result = await apiFetch<Comment[]>(`/api/posts/${slug}/comments`)
+  return result ?? []
 }
 
 export function createComment(slug: string, content: string): Promise<Comment> {
