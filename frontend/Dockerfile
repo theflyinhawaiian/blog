@@ -1,4 +1,4 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine AS base
 
 ARG VITE_API_URL=http://localhost:8080
 ENV VITE_API_URL=$VITE_API_URL
@@ -7,6 +7,12 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
+
+FROM base AS dev
+EXPOSE 3000
+CMD ["npm", "run", "dev", "--", "--host"]
+
+FROM base AS builder
 RUN npm run build
 
 FROM nginx:alpine
