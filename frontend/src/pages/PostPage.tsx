@@ -1,5 +1,8 @@
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import 'highlight.js/styles/github.css'
 import { usePost } from '../hooks/usePosts'
 import { useComments, useCreateComment, useAddReaction } from '../hooks/useComments'
 import { HeroImage } from '../components/HeroImage'
@@ -49,11 +52,9 @@ export function PostPage() {
           {new Date(post.created_at).toLocaleDateString()}
         </time>
 
-        <div
-          className="post-content"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-          style={{ lineHeight: 1.8, fontSize: '1.05rem' }}
-        />
+        <div className="post-content" style={{ lineHeight: 1.8, fontSize: '1.05rem' }}>
+          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{post.content}</ReactMarkdown>
+        </div>
 
         <ShareSection url={postUrl} title={post.title} />
 
