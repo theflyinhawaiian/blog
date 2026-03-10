@@ -1,6 +1,6 @@
 module github.com/peterblog/blog
 
-go 1.22
+go 1.25
 
 require (
 	github.com/coreos/go-oidc/v3 v3.10.0
