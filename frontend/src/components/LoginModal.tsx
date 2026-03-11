@@ -4,7 +4,6 @@ import styles from './LoginModal.module.css'
 
 const PROVIDERS = [
   { id: 'google', label: 'Continue with Google', color: '#4285f4' },
-  { id: 'apple', label: 'Continue with Apple', color: '#000' },
   { id: 'facebook', label: 'Continue with Facebook', color: '#1877f2' },
   { id: 'linkedin', label: 'Continue with LinkedIn', color: '#0077b5' },
   { id: 'github', label: 'Continue with GitHub', color: '#333' },
