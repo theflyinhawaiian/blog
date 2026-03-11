@@ -1,4 +1,4 @@
-import { User } from '../types/user'
+import { User } from '@typedef/user'
 import { apiFetch } from './client'
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'

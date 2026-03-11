@@ -1,4 +1,4 @@
-import { Comment } from '../types/comment'
+import { Comment } from '@typedef/comment'
 import { CommentItem } from './CommentItem'
 import { CommentForm } from './CommentForm'
 import styles from './CommentList.module.css'

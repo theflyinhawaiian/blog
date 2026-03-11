@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchMe, logout as apiLogout } from '../api/auth'
+import { fetchMe, logout as apiLogout } from '@api/auth'
 
 export function useAuth() {
   const queryClient = useQueryClient()

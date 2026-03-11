@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '@hooks/useAuth'
 import styles from './Header.module.css'
 
 export function Header() {

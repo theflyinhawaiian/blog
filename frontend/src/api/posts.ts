@@ -1,4 +1,4 @@
-import { Post, PostSummary } from '../types/post'
+import { Post, PostSummary } from '@typedef/post'
 import { apiFetch } from './client'
 
 export function fetchPosts(): Promise<PostSummary[]> {

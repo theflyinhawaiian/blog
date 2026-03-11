@@ -1,6 +1,6 @@
-import { Comment } from '../types/comment'
+import { Comment } from '@typedef/comment'
 import { ReactionPicker } from './ReactionPicker'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '@hooks/useAuth'
 import styles from './CommentItem.module.css'
 
 interface Props {

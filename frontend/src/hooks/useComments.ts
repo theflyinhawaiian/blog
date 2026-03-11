@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchComments, createComment, addReaction } from '../api/comments'
+import { fetchComments, createComment, addReaction } from '@api/comments'
 
 export function useComments(slug: string) {
   return useQuery({

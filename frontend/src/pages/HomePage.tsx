@@ -1,5 +1,5 @@
-import { usePosts } from '../hooks/usePosts'
-import { PostCard } from '../components/PostCard'
+import { usePosts } from '@hooks/usePosts'
+import { PostCard } from '@components/PostCard'
 import styles from './HomePage.module.css'
 
 export function HomePage() {

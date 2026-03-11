@@ -1,5 +1,5 @@
-import { getLoginUrl } from '../api/auth'
-import { useAuth } from '../hooks/useAuth'
+import { getLoginUrl } from '@api/auth'
+import { useAuth } from '@hooks/useAuth'
 import { Navigate } from 'react-router-dom'
 import styles from './LoginPage.module.css'
 

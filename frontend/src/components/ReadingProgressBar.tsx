@@ -1,4 +1,4 @@
-import { useReadingProgress } from '../hooks/useReadingProgress'
+import { useReadingProgress } from '@hooks/useReadingProgress'
 import styles from './ReadingProgressBar.module.css'
 
 export function ReadingProgressBar() {
