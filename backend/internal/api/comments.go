@@ -105,6 +105,10 @@ func addReaction(database *sqlx.DB) http.HandlerFunc {
 			jsonError(w, "emoji is required", http.StatusBadRequest)
 			return
 		}
+		if !isValidEmoji(body.Emoji) {
+			jsonError(w, "invalid emoji", http.StatusBadRequest)
+			return
+		}
 
 		reaction, err := db.UpsertReaction(database, commentID, body.Emoji)
 		if err != nil {
@@ -114,4 +118,20 @@ func addReaction(database *sqlx.DB) http.HandlerFunc {
 
 		jsonResponse(w, reaction)
 	}
+}
+
+// isValidEmoji returns true if s looks like an emoji rather than text.
+// Rejects anything containing ASCII characters (blocks letters, punctuation, angle braces, etc.)
+// and enforces a max byte length. Intentionally permissive — blocks words/phrases, not every
+// non-emoji Unicode character.
+func isValidEmoji(s string) bool {
+	if len(s) > 32 {
+		return false
+	}
+	for _, r := range s {
+		if r < 128 {
+			return false
+		}
+	}
+	return true
 }
