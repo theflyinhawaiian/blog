@@ -7,7 +7,7 @@ import (
 
 func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		origin := os.Getenv("APP_BASE_URL")
+		origin := os.Getenv("FRONTEND_URL")
 		if origin == "" {
 			origin = "http://localhost:3000"
 		}

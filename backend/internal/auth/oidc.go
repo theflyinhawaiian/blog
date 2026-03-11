@@ -28,7 +28,7 @@ var providers map[string]*ProviderConfig
 
 func InitProviders(ctx context.Context) error {
 	providers = make(map[string]*ProviderConfig)
-	baseURL := os.Getenv("APP_BASE_URL")
+	baseURL := os.Getenv("BACKEND_URL")
 
 	// Google
 	googleProvider, err := oidc.NewProvider(ctx, "https://accounts.google.com")
@@ -260,7 +260,7 @@ func ValidateOAuthState(r *http.Request, state string) bool {
 
 // RedirectToFrontend builds a frontend redirect URL.
 func RedirectToFrontend(path string) string {
-	base := os.Getenv("APP_BASE_URL")
+	base := os.Getenv("FRONTEND_URL")
 	u, _ := url.Parse(base)
 	u.Path = path
 	return u.String()
