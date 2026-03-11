@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useAuth } from '@hooks/useAuth'
+import { useLoginModal } from '@hooks/useLoginModal'
 import styles from './CommentForm.module.css'
 
 interface Props {
@@ -10,12 +10,13 @@ interface Props {
 
 export function CommentForm({ onSubmit, isSubmitting }: Props) {
   const { user } = useAuth()
+  const { openLoginModal } = useLoginModal()
   const [content, setContent] = useState('')
 
   if (!user) {
     return (
       <p className={styles.loginPrompt}>
-        <Link to="/login" className={styles.loginLink}>Log in</Link> to leave a comment.
+        <button onClick={openLoginModal} className={styles.loginLink}>Log in</button> to leave a comment.
       </p>
     )
   }
