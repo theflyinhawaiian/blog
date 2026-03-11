@@ -9,6 +9,7 @@ import { HeroImage } from '../components/HeroImage'
 import { ReadingProgressBar } from '../components/ReadingProgressBar'
 import { ShareSection } from '../components/ShareSection'
 import { CommentList } from '../components/CommentList'
+import styles from './PostPage.module.css'
 
 export function PostPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -17,8 +18,8 @@ export function PostPage() {
   const createComment = useCreateComment(slug ?? '')
   const addReaction = useAddReaction(slug ?? '')
 
-  if (isLoading) return <div style={{ padding: '2rem', textAlign: 'center' }}>Loading post...</div>
-  if (error || !post) return <div style={{ padding: '2rem', color: 'red' }}>Post not found.</div>
+  if (isLoading) return <div className={styles.loading}>Loading post...</div>
+  if (error || !post) return <div className={styles.error}>Post not found.</div>
 
   const postUrl = window.location.href
   const metaDesc = post.meta_description?.Valid ? post.meta_description.String : ''
@@ -46,13 +47,13 @@ export function PostPage() {
 
       {heroImage && <HeroImage src={heroImage} alt={post.title} />}
 
-      <main style={{ maxWidth: '800px', margin: '2rem auto', padding: '0 1rem' }}>
-        <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{post.title}</h1>
-        <time style={{ color: '#999', fontSize: '0.9rem', display: 'block', marginBottom: '2rem' }}>
+      <main className={styles.main}>
+        <h1 className={styles.title}>{post.title}</h1>
+        <time className={styles.date}>
           {new Date(post.created_at).toLocaleDateString()}
         </time>
 
-        <div className="post-content" style={{ lineHeight: 1.8, fontSize: '1.05rem' }}>
+        <div className={`post-content ${styles.content}`}>
           <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{post.content}</ReactMarkdown>
         </div>
 

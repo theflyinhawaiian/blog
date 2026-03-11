@@ -1,6 +1,7 @@
 import { Comment } from '../types/comment'
 import { ReactionPicker } from './ReactionPicker'
 import { useAuth } from '../hooks/useAuth'
+import styles from './CommentItem.module.css'
 
 interface Props {
   comment: Comment
@@ -11,23 +12,23 @@ export function CommentItem({ comment, onReact }: Props) {
   const { user } = useAuth()
 
   return (
-    <div style={{ borderBottom: '1px solid #eee', padding: '1rem 0' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem' }}>
-        <strong style={{ fontSize: '0.9rem' }}>{comment.display_name}</strong>
-        <time style={{ fontSize: '0.8rem', color: '#999' }}>
+    <div className={styles.item}>
+      <div className={styles.itemHeader}>
+        <strong className={styles.author}>{comment.display_name}</strong>
+        <time className={styles.date}>
           {new Date(comment.created_at).toLocaleString()}
         </time>
       </div>
       <div
-        style={{ lineHeight: 1.6, color: '#333' }}
+        className={styles.content}
         dangerouslySetInnerHTML={{ __html: comment.content }}
       />
-      <div style={{ marginTop: '0.5rem', display: 'flex', gap: '0.4rem', flexWrap: 'wrap', alignItems: 'center' }}>
+      <div className={styles.reactions}>
         {comment.reactions.map((r) => (
           <button
             key={r.emoji}
             onClick={() => onReact(comment.id, r.emoji)}
-            style={{ background: '#f5f5f5', border: '1px solid #ddd', borderRadius: '12px', padding: '0.15rem 0.5rem', cursor: 'pointer', fontSize: '0.85rem' }}
+            className={styles.reactionBtn}
           >
             {r.emoji} {r.count}
           </button>

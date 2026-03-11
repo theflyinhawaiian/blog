@@ -1,0 +1,12 @@
+.section {
+  margin-top: 3rem;
+}
+
+.heading {
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.empty {
+  color: #888;
+}

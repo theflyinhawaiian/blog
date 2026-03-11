@@ -1,0 +1,20 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  font-size: 1rem;
+}
+
+.picker {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0;
+  z-index: 100;
+}

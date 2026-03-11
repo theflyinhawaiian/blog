@@ -1,6 +1,7 @@
 import { Comment } from '../types/comment'
 import { CommentItem } from './CommentItem'
 import { CommentForm } from './CommentForm'
+import styles from './CommentList.module.css'
 
 interface Props {
   comments: Comment[]
@@ -11,13 +12,13 @@ interface Props {
 
 export function CommentList({ comments, onSubmit, onReact, isSubmitting }: Props) {
   return (
-    <section style={{ marginTop: '3rem' }}>
-      <h2 style={{ borderBottom: '2px solid #eee', paddingBottom: '0.5rem' }}>
+    <section className={styles.section}>
+      <h2 className={styles.heading}>
         Comments ({comments.length})
       </h2>
       <CommentForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
       {comments.length === 0 ? (
-        <p style={{ color: '#888' }}>No comments yet. Be the first!</p>
+        <p className={styles.empty}>No comments yet. Be the first!</p>
       ) : (
         comments.map((c) => (
           <CommentItem key={c.id} comment={c} onReact={onReact} />

@@ -1,3 +1,5 @@
+import styles from './HeroImage.module.css'
+
 interface Props {
   src: string
   alt: string
@@ -5,12 +7,8 @@ interface Props {
 
 export function HeroImage({ src, alt }: Props) {
   return (
-    <div style={{ width: '100%', maxHeight: '400px', overflow: 'hidden', marginBottom: '2rem' }}>
-      <img
-        src={src}
-        alt={alt}
-        style={{ width: '100%', height: '400px', objectFit: 'cover' }}
-      />
+    <div className={styles.wrapper}>
+      <img src={src} alt={alt} className={styles.image} />
     </div>
   )
 }

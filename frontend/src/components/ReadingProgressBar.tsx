@@ -1,20 +1,10 @@
 import { useReadingProgress } from '../hooks/useReadingProgress'
+import styles from './ReadingProgressBar.module.css'
 
 export function ReadingProgressBar() {
   const progress = useReadingProgress()
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        bottom: 0,
-        left: 0,
-        width: `${progress}%`,
-        height: '4px',
-        background: '#0070f3',
-        transition: 'width 0.1s linear',
-        zIndex: 1000,
-      }}
-    />
+    <div className={styles.bar} style={{ width: `${progress}%` }} />
   )
 }

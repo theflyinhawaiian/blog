@@ -1,0 +1,41 @@
+.item {
+  border-bottom: 1px solid #eee;
+  padding: 1rem 0;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.author {
+  font-size: 0.9rem;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.content {
+  line-height: 1.6;
+  color: #333;
+}
+
+.reactions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.reactionBtn {
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 0.15rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
