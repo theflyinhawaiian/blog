@@ -2,21 +2,15 @@ package auth
 
 import (
 	"context"
-	"crypto/ecdsa"
 	"crypto/rand"
-	"crypto/sha256"
-	"crypto/x509"
 	"encoding/base64"
 	"encoding/json"
-	"encoding/pem"
 	"fmt"
 	"io"
-	"math/big"
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"golang.org/x/oauth2"
@@ -92,22 +86,6 @@ func InitProviders(ctx context.Context) error {
 		IsOIDC: false,
 	}
 
-	// Apple (OIDC with JWT client secret)
-	appleProvider, err := oidc.NewProvider(ctx, "https://appleid.apple.com")
-	if err != nil {
-		return fmt.Errorf("apple oidc: %w", err)
-	}
-	providers["apple"] = &ProviderConfig{
-		OAuth2Config: &oauth2.Config{
-			ClientID:    os.Getenv("APPLE_CLIENT_ID"),
-			RedirectURL: baseURL + "/auth/apple/callback",
-			Endpoint:    appleProvider.Endpoint(),
-			Scopes:      []string{oidc.ScopeOpenID, "name", "email"},
-		},
-		Verifier: appleProvider.Verifier(&oidc.Config{ClientID: os.Getenv("APPLE_CLIENT_ID")}),
-		IsOIDC:   true,
-	}
-
 	return nil
 }
 
@@ -116,76 +94,6 @@ func GetProvider(name string) (*ProviderConfig, bool) {
 	return p, ok
 }
 
-// GenerateAppleClientSecret builds the JWT needed as Apple's client_secret.
-func GenerateAppleClientSecret() (string, error) {
-	keyPEM := os.Getenv("APPLE_CLIENT_SECRET") // the .p8 private key PEM
-	if keyPEM == "" {
-		return "", fmt.Errorf("APPLE_CLIENT_SECRET not set")
-	}
-
-	block, _ := pem.Decode([]byte(keyPEM))
-	if block == nil {
-		return "", fmt.Errorf("failed to decode PEM block")
-	}
-
-	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
-	if err != nil {
-		return "", fmt.Errorf("parse apple private key: %w", err)
-	}
-
-	ecKey, ok := key.(*ecdsa.PrivateKey)
-	if !ok {
-		return "", fmt.Errorf("apple key is not ECDSA")
-	}
-
-	header := base64.RawURLEncoding.EncodeToString(mustMarshalJSON(map[string]string{
-		"alg": "ES256",
-		"kid": os.Getenv("APPLE_KEY_ID"),
-	}))
-	now := time.Now()
-	payload := base64.RawURLEncoding.EncodeToString(mustMarshalJSON(map[string]interface{}{
-		"iss": os.Getenv("APPLE_TEAM_ID"),
-		"iat": now.Unix(),
-		"exp": now.Add(5 * time.Minute).Unix(),
-		"aud": "https://appleid.apple.com",
-		"sub": os.Getenv("APPLE_CLIENT_ID"),
-	}))
-
-	sigInput := header + "." + payload
-	hash := sha256.Sum256([]byte(sigInput))
-
-	r, s, err := ecdsa.Sign(rand.Reader, ecKey, hash[:])
-	if err != nil {
-		return "", fmt.Errorf("signing: %w", err)
-	}
-
-	// IEEE P1363 format: r || s, each 32 bytes
-	sig := make([]byte, 64)
-	rBytes := paddedBigInt(r, 32)
-	sBytes := paddedBigInt(s, 32)
-	copy(sig[:32], rBytes)
-	copy(sig[32:], sBytes)
-
-	return sigInput + "." + base64.RawURLEncoding.EncodeToString(sig), nil
-}
-
-func paddedBigInt(n *big.Int, size int) []byte {
-	b := n.Bytes()
-	if len(b) >= size {
-		return b
-	}
-	padded := make([]byte, size)
-	copy(padded[size-len(b):], b)
-	return padded
-}
-
-func mustMarshalJSON(v interface{}) []byte {
-	b, err := json.Marshal(v)
-	if err != nil {
-		panic(err)
-	}
-	return b
-}
 
 type UserInfo struct {
 	ProviderUserID string
@@ -196,7 +104,7 @@ type UserInfo struct {
 // FetchUserInfo retrieves user identity from the provider after OAuth2 token exchange.
 func FetchUserInfo(ctx context.Context, provider string, cfg *ProviderConfig, token *oauth2.Token) (*UserInfo, error) {
 	switch provider {
-	case "google", "apple":
+	case "google":
 		rawIDToken, ok := token.Extra("id_token").(string)
 		if !ok {
 			return nil, fmt.Errorf("no id_token in response")

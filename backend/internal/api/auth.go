@@ -51,16 +51,7 @@ func callbackAuth(database *sqlx.DB) http.HandlerFunc {
 		var token *oauth2.Token
 		var exchangeErr error
 
-		if providerName == "apple" {
-			secret, err := auth.GenerateAppleClientSecret()
-			if err != nil {
-				http.Redirect(w, r, auth.RedirectToFrontend("/login?error=apple_secret"), http.StatusFound)
-				return
-			}
-			token, exchangeErr = auth.ExchangeCode(r.Context(), cfg, code, secret)
-		} else {
-			token, exchangeErr = auth.ExchangeCode(r.Context(), cfg, code)
-		}
+		token, exchangeErr = auth.ExchangeCode(r.Context(), cfg, code)
 
 		if exchangeErr != nil {
 			http.Redirect(w, r, auth.RedirectToFrontend("/login?error=token_exchange"), http.StatusFound)
