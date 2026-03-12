@@ -55,18 +55,36 @@ func CreateComment(db *sqlx.DB, postID, userID uint64, content string) (*models.
 }
 
 func GetReactionsByCommentID(db *sqlx.DB, commentID, userID uint64) ([]models.Reaction, error) {
-	var reactions []models.Reaction
-	err := db.Select(&reactions,
-		`SELECT emoji, COUNT(*) AS count, CAST(SUM(user_id = ?) AS UNSIGNED) > 0 AS reacted_by_me
-		 FROM comment_reactions
-		 WHERE comment_id = ?
-		 GROUP BY emoji`,
-		userID, commentID)
-	if err != nil {
+	type row struct {
+		Emoji string `db:"emoji"`
+		Count int    `db:"count"`
+	}
+	var rows []row
+	if err := db.Select(&rows,
+		`SELECT emoji, COUNT(*) AS count FROM comment_reactions WHERE comment_id = ? GROUP BY emoji`,
+		commentID); err != nil {
 		return nil, err
 	}
-	if reactions == nil {
-		reactions = []models.Reaction{}
+	if len(rows) == 0 {
+		return []models.Reaction{}, nil
+	}
+
+	reacted := make(map[string]bool)
+	if userID > 0 {
+		var userEmojis []string
+		if err := db.Select(&userEmojis,
+			`SELECT emoji FROM comment_reactions WHERE comment_id = ? AND user_id = ?`,
+			commentID, userID); err != nil {
+			return nil, err
+		}
+		for _, e := range userEmojis {
+			reacted[e] = true
+		}
+	}
+
+	reactions := make([]models.Reaction, len(rows))
+	for i, r := range rows {
+		reactions[i] = models.Reaction{Emoji: r.Emoji, Count: r.Count, ReactedByMe: reacted[r.Emoji]}
 	}
 	return reactions, nil
 }
