@@ -1,8 +1,7 @@
 export interface Reaction {
-  id: number
-  comment_id: number
   emoji: string
   count: number
+  reacted_by_me: boolean
 }
 
 export interface Comment {

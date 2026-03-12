@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/jmoiron/sqlx"
 	"github.com/microcosm-cc/bluemonday"
+	"github.com/peterblog/blog/internal/auth"
 	"github.com/peterblog/blog/internal/db"
 	"github.com/peterblog/blog/internal/middleware"
 )
@@ -30,8 +32,11 @@ func getComments(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		comments, err := db.GetCommentsByPostID(database, post.ID)
+		userID, _ := auth.GetSessionUserID(r)
+
+		comments, err := db.GetCommentsByPostID(database, post.ID, userID)
 		if err != nil {
+			log.Printf("getComments: %v", err)
 			jsonError(w, "failed to fetch comments", http.StatusInternalServerError)
 			return
 		}
@@ -110,7 +115,13 @@ func addReaction(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		reaction, err := db.UpsertReaction(database, commentID, body.Emoji)
+		userID, ok := middleware.GetUserID(r)
+		if !ok {
+			jsonError(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		reaction, err := db.ToggleReaction(database, commentID, userID, body.Emoji)
 		if err != nil {
 			jsonError(w, "failed to add reaction", http.StatusInternalServerError)
 			return

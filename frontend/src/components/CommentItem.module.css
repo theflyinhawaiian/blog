@@ -39,3 +39,8 @@
   cursor: pointer;
   font-size: 0.85rem;
 }
+
+.reactionBtnActive {
+  background: #e8f0fe;
+  border-color: #4285f4;
+}

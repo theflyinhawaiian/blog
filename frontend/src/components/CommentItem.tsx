@@ -24,11 +24,11 @@ export function CommentItem({ comment, onReact }: Props) {
         dangerouslySetInnerHTML={{ __html: comment.content }}
       />
       <div className={styles.reactions}>
-        {comment.reactions.map((r) => (
+        {comment.reactions.filter((r) => r.count > 0).map((r) => (
           <button
             key={r.emoji}
             onClick={() => onReact(comment.id, r.emoji)}
-            className={styles.reactionBtn}
+            className={`${styles.reactionBtn} ${r.reacted_by_me ? styles.reactionBtnActive : ''}`}
           >
             {r.emoji} {r.count}
           </button>
