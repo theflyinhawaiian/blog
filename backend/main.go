@@ -29,6 +29,10 @@ func main() {
 	}
 	defer database.Close()
 
+	if err := db.Migrate(database); err != nil {
+		log.Fatalf("Failed to run migrations: %v", err)
+	}
+
 	router := api.NewRouter(database)
 
 	port := os.Getenv("PORT")
