@@ -40,7 +40,7 @@ func InitProviders(ctx context.Context) error {
 			ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/google/callback",
 			Endpoint:     googleProvider.Endpoint(),
-			Scopes:       []string{oidc.ScopeOpenID, "profile", "email"},
+			Scopes:       []string{oidc.ScopeOpenID, "profile"},
 		},
 		Verifier: googleProvider.Verifier(&oidc.Config{ClientID: os.Getenv("GOOGLE_CLIENT_ID")}),
 		IsOIDC:   true,
@@ -53,7 +53,7 @@ func InitProviders(ctx context.Context) error {
 			ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/github/callback",
 			Endpoint:     github.Endpoint,
-			Scopes:       []string{"read:user", "user:email"},
+			Scopes:       []string{"read:user"},
 		},
 		IsOIDC: false,
 	}
@@ -65,7 +65,7 @@ func InitProviders(ctx context.Context) error {
 			ClientSecret: os.Getenv("FACEBOOK_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/facebook/callback",
 			Endpoint:     facebook.Endpoint,
-			Scopes:       []string{"public_profile", "email"},
+			Scopes:       []string{"public_profile"},
 		},
 		IsOIDC: false,
 	}
@@ -80,7 +80,7 @@ func InitProviders(ctx context.Context) error {
 				AuthURL:  "https://www.linkedin.com/oauth/v2/authorization",
 				TokenURL: "https://www.linkedin.com/oauth/v2/accessToken",
 			},
-			Scopes: []string{"openid", "profile", "email"},
+			Scopes: []string{"openid", "profile"},
 		},
 		IsOIDC: false,
 	}
@@ -97,7 +97,6 @@ func GetProvider(name string) (*ProviderConfig, bool) {
 type UserInfo struct {
 	ProviderUserID string
 	DisplayName    string
-	Email          *string
 }
 
 // FetchUserInfo retrieves user identity from the provider after OAuth2 token exchange.
@@ -113,18 +112,13 @@ func FetchUserInfo(ctx context.Context, provider string, cfg *ProviderConfig, to
 			return nil, fmt.Errorf("id_token verification: %w", err)
 		}
 		var claims struct {
-			Sub   string `json:"sub"`
-			Name  string `json:"name"`
-			Email string `json:"email"`
+			Sub  string `json:"sub"`
+			Name string `json:"name"`
 		}
 		if err := idToken.Claims(&claims); err != nil {
 			return nil, err
 		}
-		info := &UserInfo{ProviderUserID: claims.Sub, DisplayName: claims.Name}
-		if claims.Email != "" {
-			info.Email = &claims.Email
-		}
-		return info, nil
+		return &UserInfo{ProviderUserID: claims.Sub, DisplayName: claims.Name}, nil
 
 	case "github":
 		return fetchGitHubUser(cfg.OAuth2Config.Client(ctx, token))
@@ -151,7 +145,6 @@ func fetchGitHubUser(client *http.Client) (*UserInfo, error) {
 		ID    int64  `json:"id"`
 		Login string `json:"login"`
 		Name  string `json:"name"`
-		Email string `json:"email"`
 	}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return nil, err
@@ -161,18 +154,14 @@ func fetchGitHubUser(client *http.Client) (*UserInfo, error) {
 	if name == "" {
 		name = data.Login
 	}
-	info := &UserInfo{
+	return &UserInfo{
 		ProviderUserID: fmt.Sprintf("%d", data.ID),
 		DisplayName:    name,
-	}
-	if data.Email != "" {
-		info.Email = &data.Email
-	}
-	return info, nil
+	}, nil
 }
 
 func fetchFacebookUser(client *http.Client) (*UserInfo, error) {
-	resp, err := client.Get("https://graph.facebook.com/me?fields=id,name,email")
+	resp, err := client.Get("https://graph.facebook.com/me?fields=id,name")
 	if err != nil {
 		return nil, err
 	}
@@ -180,19 +169,14 @@ func fetchFacebookUser(client *http.Client) (*UserInfo, error) {
 	body, _ := io.ReadAll(resp.Body)
 
 	var data struct {
-		ID    string `json:"id"`
-		Name  string `json:"name"`
-		Email string `json:"email"`
+		ID   string `json:"id"`
+		Name string `json:"name"`
 	}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return nil, err
 	}
 
-	info := &UserInfo{ProviderUserID: data.ID, DisplayName: data.Name}
-	if data.Email != "" {
-		info.Email = &data.Email
-	}
-	return info, nil
+	return &UserInfo{ProviderUserID: data.ID, DisplayName: data.Name}, nil
 }
 
 func fetchLinkedInUser(client *http.Client) (*UserInfo, error) {
@@ -204,19 +188,14 @@ func fetchLinkedInUser(client *http.Client) (*UserInfo, error) {
 	body, _ := io.ReadAll(resp.Body)
 
 	var data struct {
-		Sub   string `json:"sub"`
-		Name  string `json:"name"`
-		Email string `json:"email"`
+		Sub  string `json:"sub"`
+		Name string `json:"name"`
 	}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return nil, err
 	}
 
-	info := &UserInfo{ProviderUserID: data.Sub, DisplayName: data.Name}
-	if data.Email != "" {
-		info.Email = &data.Email
-	}
-	return info, nil
+	return &UserInfo{ProviderUserID: data.Sub, DisplayName: data.Name}, nil
 }
 
 // ExchangeCode exchanges the authorization code for a token.

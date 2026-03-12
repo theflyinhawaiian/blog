@@ -64,7 +64,7 @@ func callbackAuth(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		user, err := dbpkg.UpsertUser(database, providerName, userInfo.ProviderUserID, userInfo.DisplayName, userInfo.Email)
+		user, err := dbpkg.UpsertUser(database, providerName, userInfo.ProviderUserID, userInfo.DisplayName)
 		if err != nil {
 			http.Redirect(w, r, auth.RedirectToFrontend("/login?error=db"), http.StatusFound)
 			return

@@ -9,9 +9,8 @@ type User struct {
 }
 
 type UserIdentity struct {
-	ID             uint64  `db:"id" json:"id"`
-	UserID         uint64  `db:"user_id" json:"user_id"`
-	Provider       string  `db:"provider" json:"provider"`
-	ProviderUserID string  `db:"provider_user_id" json:"provider_user_id"`
-	Email          *string `db:"email" json:"email,omitempty"`
+	ID             uint64 `db:"id" json:"id"`
+	UserID         uint64 `db:"user_id" json:"user_id"`
+	Provider       string `db:"provider" json:"provider"`
+	ProviderUserID string `db:"provider_user_id" json:"provider_user_id"`
 }

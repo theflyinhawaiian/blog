@@ -10,10 +10,10 @@ import (
 
 // UpsertUser finds or creates a user for the given provider identity.
 // Returns the user and whether it was newly created.
-func UpsertUser(db *sqlx.DB, provider, providerUserID, displayName string, email *string) (*models.User, error) {
+func UpsertUser(db *sqlx.DB, provider, providerUserID, displayName string) (*models.User, error) {
 	var identity models.UserIdentity
 	err := db.Get(&identity,
-		`SELECT id, user_id, provider, provider_user_id, email
+		`SELECT id, user_id, provider, provider_user_id
 		 FROM user_identities WHERE provider = ? AND provider_user_id = ?`,
 		provider, providerUserID)
 
@@ -46,8 +46,8 @@ func UpsertUser(db *sqlx.DB, provider, providerUserID, displayName string, email
 	}
 
 	_, err = tx.Exec(
-		`INSERT INTO user_identities (user_id, provider, provider_user_id, email) VALUES (?, ?, ?, ?)`,
-		userID, provider, providerUserID, email)
+		`INSERT INTO user_identities (user_id, provider, provider_user_id) VALUES (?, ?, ?)`,
+		userID, provider, providerUserID)
 	if err != nil {
 		return nil, err
 	}
