@@ -23,21 +23,24 @@ img {
   margin-bottom: 1.25rem;
 }
 
-.post-content pre {
+.post-content pre,
+.comment-content pre {
   background: #f5f5f5;
   padding: 1rem;
   overflow-x: auto;
   border-radius: 4px;
 }
 
-.post-content code {
+.post-content code,
+.comment-content code {
   background: #f5f5f5;
   padding: 0.1em 0.3em;
   border-radius: 3px;
   font-size: 0.9em;
 }
 
-.post-content blockquote {
+.post-content blockquote,
+.comment-content blockquote {
   border-left: 4px solid #ddd;
   margin: 0;
   padding-left: 1rem;

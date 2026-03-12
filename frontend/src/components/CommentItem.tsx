@@ -1,6 +1,7 @@
 import { Comment } from '@typedef/comment'
 import { ReactionPicker } from './ReactionPicker'
 import { useAuth } from '@hooks/useAuth'
+import { MarkdownContent } from './MarkdownContent'
 import styles from './CommentItem.module.css'
 
 interface Props {
@@ -19,10 +20,7 @@ export function CommentItem({ comment, onReact }: Props) {
           {new Date(comment.created_at).toLocaleString()}
         </time>
       </div>
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{ __html: comment.content }}
-      />
+      <MarkdownContent content={comment.content} className={`comment-content ${styles.content}`} />
       <div className={styles.reactions}>
         {comment.reactions.filter((r) => r.count > 0).map((r) => (
           <button

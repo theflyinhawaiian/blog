@@ -1,10 +1,8 @@
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import ReactMarkdown from 'react-markdown'
-import rehypeHighlight from 'rehype-highlight'
-import 'highlight.js/styles/github.css'
 import { usePost } from '@hooks/usePosts'
 import { useComments, useCreateComment, useAddReaction } from '@hooks/useComments'
+import { MarkdownContent } from '@components/MarkdownContent'
 import { HeroImage } from '@components/HeroImage'
 import { ReadingProgressBar } from '@components/ReadingProgressBar'
 import { ShareSection } from '@components/ShareSection'
@@ -53,9 +51,7 @@ export function PostPage() {
           {new Date(post.created_at).toLocaleDateString()}
         </time>
 
-        <div className={`post-content ${styles.content}`}>
-          <ReactMarkdown rehypePlugins={[rehypeHighlight]}>{post.content}</ReactMarkdown>
-        </div>
+        <MarkdownContent content={post.content} className={`post-content ${styles.content}`} />
 
         <ShareSection url={postUrl} title={post.title} />
 
