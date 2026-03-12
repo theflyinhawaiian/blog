@@ -1,12 +1,13 @@
 import { useEffect } from 'react'
+import { FaGoogle, FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa'
 import { getLoginUrl } from '@api/auth'
 import styles from './LoginModal.module.css'
 
 const PROVIDERS = [
-  { id: 'google', label: 'Continue with Google', color: '#4285f4' },
-  { id: 'facebook', label: 'Continue with Facebook', color: '#1877f2' },
-  { id: 'linkedin', label: 'Continue with LinkedIn', color: '#0077b5' },
-  { id: 'github', label: 'Continue with GitHub', color: '#333' },
+  { id: 'google',   label: 'Continue with Google',   color: '#4285f4', Icon: FaGoogle },
+  { id: 'facebook', label: 'Continue with Facebook', color: '#1877f2', Icon: FaFacebook },
+  { id: 'linkedin', label: 'Continue with LinkedIn', color: '#0077b5', Icon: FaLinkedin },
+  { id: 'github',   label: 'Continue with GitHub',   color: '#333',    Icon: FaGithub },
 ]
 
 interface Props {
@@ -38,7 +39,7 @@ export function LoginModal({ open, onClose }: Props) {
               className={styles.providerBtn}
               style={{ background: p.color }}
             >
-              {p.label}
+              <p.Icon aria-hidden /> {p.label}
             </a>
           ))}
         </div>

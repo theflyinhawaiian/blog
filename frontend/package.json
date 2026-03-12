@@ -17,6 +17,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
+    "react-icons": "^5.6.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^6.24.0",
     "rehype-highlight": "^7.0.2"
