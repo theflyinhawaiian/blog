@@ -16,7 +16,6 @@ export function CommentList({ comments, onSubmit, onReact, isSubmitting }: Props
       <h2 className={styles.heading}>
         Comments ({comments.length})
       </h2>
-      <CommentForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
       {comments.length === 0 ? (
         <p className={styles.empty}>No comments yet. Be the first!</p>
       ) : (
@@ -24,6 +23,7 @@ export function CommentList({ comments, onSubmit, onReact, isSubmitting }: Props
           <CommentItem key={c.id} comment={c} onReact={onReact} />
         ))
       )}
+      <CommentForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
     </section>
   )
 }
