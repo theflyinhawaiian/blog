@@ -10,7 +10,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"strings"
 
 	"github.com/coreos/go-oidc/v3/oidc"
 	"golang.org/x/oauth2"
@@ -197,7 +196,7 @@ func fetchFacebookUser(client *http.Client) (*UserInfo, error) {
 }
 
 func fetchLinkedInUser(client *http.Client) (*UserInfo, error) {
-	resp, err := client.Get("https://api.linkedin.com/v2/me")
+	resp, err := client.Get("https://api.linkedin.com/v2/userinfo")
 	if err != nil {
 		return nil, err
 	}
@@ -205,16 +204,19 @@ func fetchLinkedInUser(client *http.Client) (*UserInfo, error) {
 	body, _ := io.ReadAll(resp.Body)
 
 	var data struct {
-		ID             string `json:"id"`
-		LocalizedFName string `json:"localizedFirstName"`
-		LocalizedLName string `json:"localizedLastName"`
+		Sub   string `json:"sub"`
+		Name  string `json:"name"`
+		Email string `json:"email"`
 	}
 	if err := json.Unmarshal(body, &data); err != nil {
 		return nil, err
 	}
 
-	name := strings.TrimSpace(data.LocalizedFName + " " + data.LocalizedLName)
-	return &UserInfo{ProviderUserID: data.ID, DisplayName: name}, nil
+	info := &UserInfo{ProviderUserID: data.Sub, DisplayName: data.Name}
+	if data.Email != "" {
+		info.Email = &data.Email
+	}
+	return info, nil
 }
 
 // ExchangeCode exchanges the authorization code for a token.
