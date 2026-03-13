@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { usePost } from '@hooks/usePosts'
-import { useComments, useCreateComment, useAddReaction } from '@hooks/useComments'
+import { useComments, useCreateComment, useDeleteComment, useAddReaction } from '@hooks/useComments'
 import { MarkdownContent } from '@components/MarkdownContent'
 import { HeroImage } from '@components/HeroImage'
 import { ReadingProgressBar } from '@components/ReadingProgressBar'
@@ -14,6 +14,7 @@ export function PostPage() {
   const { data: post, isLoading, error } = usePost(slug ?? '')
   const { data: comments = [] } = useComments(slug ?? '')
   const createComment = useCreateComment(slug ?? '')
+  const deleteComment = useDeleteComment(slug ?? '')
   const addReaction = useAddReaction(slug ?? '')
 
   if (isLoading) return <div className={styles.loading}>Loading post...</div>
@@ -59,6 +60,7 @@ export function PostPage() {
           comments={comments}
           onSubmit={async (content) => { await createComment.mutateAsync(content) }}
           onReact={(commentId, emoji) => addReaction.mutate({ commentId, emoji })}
+          onDelete={(commentId) => deleteComment.mutate(commentId)}
           isSubmitting={createComment.isPending}
         />
       </main>

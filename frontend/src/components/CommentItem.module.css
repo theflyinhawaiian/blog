@@ -6,6 +6,7 @@
 .itemHeader {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   margin-bottom: 0.4rem;
 }
 
@@ -23,8 +24,42 @@
   color: #333;
 }
 
-.reactions {
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.deleteBtn:hover {
+  color: #c00;
+}
+
+.confirmDelete {
+  font-size: 0.75rem;
+  color: #c00;
+}
+
+.confirmDelete button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0;
+  color: inherit;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 0.5rem;
+}
+
+.reactions {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;

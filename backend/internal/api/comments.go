@@ -89,6 +89,35 @@ func createComment(database *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func deleteComment(database *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		commentID, err := strconv.ParseUint(idStr, 10, 64)
+		if err != nil {
+			jsonError(w, "invalid comment id", http.StatusBadRequest)
+			return
+		}
+
+		userID, ok := middleware.GetUserID(r)
+		if !ok {
+			jsonError(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		deleted, err := db.DeleteComment(database, commentID, userID)
+		if err != nil {
+			jsonError(w, "failed to delete comment", http.StatusInternalServerError)
+			return
+		}
+		if !deleted {
+			jsonError(w, "comment not found", http.StatusNotFound)
+			return
+		}
+
+		w.WriteHeader(http.StatusNoContent)
+	}
+}
+
 func addReaction(database *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "id")

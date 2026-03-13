@@ -89,6 +89,17 @@ func GetReactionsByCommentID(db *sqlx.DB, commentID, userID uint64) ([]models.Re
 	return reactions, nil
 }
 
+func DeleteComment(db *sqlx.DB, commentID, userID uint64) (bool, error) {
+	res, err := db.Exec(
+		`DELETE FROM comments WHERE id = ? AND user_id = ?`,
+		commentID, userID)
+	if err != nil {
+		return false, err
+	}
+	affected, err := res.RowsAffected()
+	return affected > 0, err
+}
+
 func ToggleReaction(db *sqlx.DB, commentID, userID uint64, emoji string) (*models.Reaction, error) {
 	res, err := db.Exec(
 		`DELETE FROM comment_reactions WHERE comment_id = ? AND user_id = ? AND emoji = ?`,
