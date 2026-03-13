@@ -1,18 +1,21 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { Comment } from '@typedef/comment'
 import { ReactionPicker } from './ReactionPicker'
 import { useAuth } from '@hooks/useAuth'
+import { useDeleteComment, useAddReaction } from '@hooks/useComments'
 import { MarkdownContent } from './MarkdownContent'
 import styles from './CommentItem.module.css'
 
 interface Props {
   comment: Comment
-  onReact: (commentId: number, emoji: string) => void
-  onDelete: (commentId: number) => void
 }
 
-export function CommentItem({ comment, onReact, onDelete }: Props) {
+export function CommentItem({ comment }: Props) {
+  const { slug = '' } = useParams<{ slug: string }>()
   const { user } = useAuth()
+  const deleteComment = useDeleteComment(slug)
+  const addReaction = useAddReaction(slug)
   const [confirming, setConfirming] = useState(false)
 
   return (
@@ -35,13 +38,13 @@ export function CommentItem({ comment, onReact, onDelete }: Props) {
               {r.emoji} {r.count}
             </button>
           ))}
-          {user && <ReactionPicker onSelect={(emoji) => onReact(comment.id, emoji)} />}
+          {user && <ReactionPicker onSelect={(emoji) => addReaction.mutate({ commentId: comment.id, emoji })} />}
         </div>
         {user?.id === comment.user_id && (
           confirming ? (
             <span className={styles.confirmDelete}>
               Delete?{' '}
-              <button onClick={() => { onDelete(comment.id); setConfirming(false) }}>Yes</button>
+              <button onClick={() => { deleteComment.mutate(comment.id); setConfirming(false) }}>Yes</button>
               {' '}
               <button onClick={() => setConfirming(false)}>No</button>
             </span>

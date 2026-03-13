@@ -1,16 +1,15 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useAuth } from '@hooks/useAuth'
 import { useLoginModal } from '@hooks/useLoginModal'
+import { useCreateComment } from '@hooks/useComments'
 import styles from './CommentForm.module.css'
 
-interface Props {
-  onSubmit: (content: string) => Promise<void>
-  isSubmitting: boolean
-}
-
-export function CommentForm({ onSubmit, isSubmitting }: Props) {
+export function CommentForm() {
+  const { slug = '' } = useParams<{ slug: string }>()
   const { user } = useAuth()
   const { openLoginModal } = useLoginModal()
+  const createComment = useCreateComment(slug)
   const [content, setContent] = useState('')
 
   if (!user) {
@@ -24,7 +23,7 @@ export function CommentForm({ onSubmit, isSubmitting }: Props) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!content.trim()) return
-    await onSubmit(content)
+    await createComment.mutateAsync(content)
     setContent('')
   }
 
@@ -40,10 +39,10 @@ export function CommentForm({ onSubmit, isSubmitting }: Props) {
       />
       <button
         type="submit"
-        disabled={isSubmitting || !content.trim()}
+        disabled={createComment.isPending || !content.trim()}
         className={styles.submitBtn}
       >
-        {isSubmitting ? 'Posting...' : 'Post comment'}
+        {createComment.isPending ? 'Posting...' : 'Post comment'}
       </button>
     </form>
   )

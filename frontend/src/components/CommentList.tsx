@@ -5,13 +5,9 @@ import styles from './CommentList.module.css'
 
 interface Props {
   comments: Comment[]
-  onSubmit: (content: string) => Promise<void>
-  onReact: (commentId: number, emoji: string) => void
-  onDelete: (commentId: number) => void
-  isSubmitting: boolean
 }
 
-export function CommentList({ comments, onSubmit, onReact, onDelete, isSubmitting }: Props) {
+export function CommentList({ comments }: Props) {
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>
@@ -21,10 +17,10 @@ export function CommentList({ comments, onSubmit, onReact, onDelete, isSubmittin
         <p className={styles.empty}>No comments yet. Be the first!</p>
       ) : (
         comments.map((c) => (
-          <CommentItem key={c.id} comment={c} onReact={onReact} onDelete={onDelete} />
+          <CommentItem key={c.id} comment={c} />
         ))
       )}
-      <CommentForm onSubmit={onSubmit} isSubmitting={isSubmitting} />
+      <CommentForm />
     </section>
   )
 }
