@@ -14,14 +14,92 @@
   font-size: 0.9rem;
 }
 
+.timestamps {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.1rem;
+}
+
 .date {
   font-size: 0.8rem;
   color: #999;
 }
 
+.edited {
+  font-size: 0.75rem;
+  color: #bbb;
+  font-style: italic;
+}
+
 .content {
   line-height: 1.6;
   color: #333;
+}
+
+.editBox {
+  margin: 0.5rem 0;
+}
+
+.editTextarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.editActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+.saveBtn {
+  background: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.cancelBtn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #555;
+}
+
+.ownerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.editBtn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.editBtn:hover {
+  color: #4285f4;
 }
 
 .deleteBtn {

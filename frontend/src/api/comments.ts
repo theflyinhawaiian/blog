@@ -13,6 +13,13 @@ export function createComment(slug: string, content: string): Promise<Comment> {
   })
 }
 
+export function updateComment(commentId: number, content: string): Promise<Comment> {
+  return apiFetch<Comment>(`/api/comments/${commentId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ content }),
+  })
+}
+
 export function deleteComment(commentId: number): Promise<void> {
   return apiFetch<void>(`/api/comments/${commentId}`, { method: 'DELETE' })
 }

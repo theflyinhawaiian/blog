@@ -17,6 +17,7 @@ func NewRouter(database *sqlx.DB) *chi.Mux {
 		r.Get("/posts/{slug}/comments", getComments(database))
 
 		r.With(middleware.RequireAuth).Post("/posts/{slug}/comments", createComment(database))
+		r.With(middleware.RequireAuth).Patch("/comments/{id}", updateComment(database))
 		r.With(middleware.RequireAuth).Delete("/comments/{id}", deleteComment(database))
 		r.With(middleware.RequireAuth).Post("/comments/{id}/reactions", addReaction(database))
 	})

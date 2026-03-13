@@ -9,5 +9,6 @@ type Comment struct {
 	DisplayName string     `db:"display_name" json:"display_name"`
 	Content     string     `db:"content" json:"content"`
 	CreatedAt   time.Time  `db:"created_at" json:"created_at"`
+	UpdatedAt   *time.Time `db:"updated_at" json:"updated_at"`
 	Reactions   []Reaction `db:"-" json:"reactions"`
 }

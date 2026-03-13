@@ -8,7 +8,7 @@ import (
 func GetCommentsByPostID(db *sqlx.DB, postID, userID uint64) ([]models.Comment, error) {
 	var comments []models.Comment
 	err := db.Select(&comments,
-		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at
+		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
 		 FROM comments c
 		 JOIN users u ON u.id = c.user_id
 		 WHERE c.post_id = ?
@@ -43,7 +43,7 @@ func CreateComment(db *sqlx.DB, postID, userID uint64, content string) (*models.
 
 	var comment models.Comment
 	err = db.Get(&comment,
-		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at
+		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
 		 FROM comments c
 		 JOIN users u ON u.id = c.user_id
 		 WHERE c.id = ?`, id)
@@ -87,6 +87,34 @@ func GetReactionsByCommentID(db *sqlx.DB, commentID, userID uint64) ([]models.Re
 		reactions[i] = models.Reaction{Emoji: r.Emoji, Count: r.Count, ReactedByMe: reacted[r.Emoji]}
 	}
 	return reactions, nil
+}
+
+func UpdateComment(db *sqlx.DB, commentID, userID uint64, content string) (*models.Comment, error) {
+	res, err := db.Exec(
+		`UPDATE comments SET content = ?, updated_at = NOW() WHERE id = ? AND user_id = ?`,
+		content, commentID, userID)
+	if err != nil {
+		return nil, err
+	}
+	affected, err := res.RowsAffected()
+	if err != nil {
+		return nil, err
+	}
+	if affected == 0 {
+		return nil, nil
+	}
+
+	var comment models.Comment
+	err = db.Get(&comment,
+		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
+		 FROM comments c
+		 JOIN users u ON u.id = c.user_id
+		 WHERE c.id = ?`, commentID)
+	if err != nil {
+		return nil, err
+	}
+	comment.Reactions = []models.Reaction{}
+	return &comment, nil
 }
 
 func DeleteComment(db *sqlx.DB, commentID, userID uint64) (bool, error) {

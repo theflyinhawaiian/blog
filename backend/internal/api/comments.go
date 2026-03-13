@@ -89,6 +89,49 @@ func createComment(database *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func updateComment(database *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		idStr := chi.URLParam(r, "id")
+		commentID, err := strconv.ParseUint(idStr, 10, 64)
+		if err != nil {
+			jsonError(w, "invalid comment id", http.StatusBadRequest)
+			return
+		}
+
+		userID, ok := middleware.GetUserID(r)
+		if !ok {
+			jsonError(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+
+		var body struct {
+			Content string `json:"content"`
+		}
+		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			jsonError(w, "invalid request body", http.StatusBadRequest)
+			return
+		}
+
+		content := sanitizer.Sanitize(body.Content)
+		if content == "" {
+			jsonError(w, "comment content is required", http.StatusBadRequest)
+			return
+		}
+
+		comment, err := db.UpdateComment(database, commentID, userID, content)
+		if err != nil {
+			jsonError(w, "failed to update comment", http.StatusInternalServerError)
+			return
+		}
+		if comment == nil {
+			jsonError(w, "comment not found", http.StatusNotFound)
+			return
+		}
+
+		jsonResponse(w, comment)
+	}
+}
+
 func deleteComment(database *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		idStr := chi.URLParam(r, "id")

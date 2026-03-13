@@ -11,5 +11,6 @@ export interface Comment {
   display_name: string
   content: string
   created_at: string
+  updated_at: string | null
   reactions: Reaction[]
 }

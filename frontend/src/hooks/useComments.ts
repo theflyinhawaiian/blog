@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchComments, createComment, deleteComment, addReaction } from '@api/comments'
+import { fetchComments, createComment, updateComment, deleteComment, addReaction } from '@api/comments'
 
 export function useComments(slug: string) {
   return useQuery({
@@ -13,6 +13,17 @@ export function useCreateComment(slug: string) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: (content: string) => createComment(slug, content),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['comments', slug] })
+    },
+  })
+}
+
+export function useUpdateComment(slug: string) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: ({ commentId, content }: { commentId: number; content: string }) =>
+      updateComment(commentId, content),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', slug] })
     },
