@@ -29,7 +29,7 @@ export function ReactionPicker({ onSelect }: Props) {
   return (
     <div ref={ref} className={styles.wrapper}>
       <button onClick={() => setOpen((v) => !v)} className={styles.trigger} title="Add reaction">
-        😊
+        ➕
       </button>
       {open && (
         <div className={styles.picker}>

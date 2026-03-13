@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { DateTime } from 'luxon'
 import { Comment } from '@typedef/comment'
 import { ReactionPicker } from './ReactionPicker'
 import { useAuth } from '@hooks/useAuth'
@@ -39,12 +40,18 @@ export function CommentItem({ comment }: Props) {
       <div className={styles.itemHeader}>
         <strong className={styles.author}>{comment.display_name}</strong>
         <div className={styles.timestamps}>
-          <time className={styles.date}>
-            {new Date(comment.created_at).toLocaleString()}
+          <time
+            className={styles.date}
+            title={DateTime.fromISO(comment.created_at).toLocaleString(DateTime.DATETIME_FULL)}
+          >
+            {DateTime.fromISO(comment.created_at).toRelative()}
           </time>
           {comment.updated_at && (
-            <span className={styles.edited}>
-              edited {new Date(comment.updated_at).toLocaleString()}
+            <span
+              className={styles.edited}
+              title={DateTime.fromISO(comment.updated_at).toLocaleString(DateTime.DATETIME_FULL)}
+            >
+              edited {DateTime.fromISO(comment.updated_at).toRelative()}
             </span>
           )}
         </div>
