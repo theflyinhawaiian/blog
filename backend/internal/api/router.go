@@ -27,6 +27,7 @@ func NewRouter(database *sqlx.DB) *chi.Mux {
 		r.Get("/{provider}/callback", callbackAuth(database))
 		r.Get("/me", getMe(database))
 		r.Post("/logout", logout(database))
+		r.With(middleware.RequireAuth).Delete("/me", deleteAccount(database))
 	})
 
 	return r

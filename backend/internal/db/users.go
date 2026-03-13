@@ -61,6 +61,17 @@ func UpsertUser(db *sqlx.DB, provider, providerUserID, displayName string) (*mod
 	return &user, err
 }
 
+func DeleteUser(db *sqlx.DB, userID uint64) error {
+	_, err := db.Exec(
+		`UPDATE comments SET user_id = NULL, display_name = 'Deleted user' WHERE user_id = ?`,
+		userID)
+	if err != nil {
+		return err
+	}
+	_, err = db.Exec(`DELETE FROM users WHERE id = ?`, userID)
+	return err
+}
+
 func GetUserByID(db *sqlx.DB, id uint64) (*models.User, error) {
 	var user models.User
 	err := db.Get(&user, `SELECT id, display_name, created_at FROM users WHERE id = ?`, id)

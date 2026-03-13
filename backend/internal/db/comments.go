@@ -8,11 +8,10 @@ import (
 func GetCommentsByPostID(db *sqlx.DB, postID, userID uint64) ([]models.Comment, error) {
 	var comments []models.Comment
 	err := db.Select(&comments,
-		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
-		 FROM comments c
-		 JOIN users u ON u.id = c.user_id
-		 WHERE c.post_id = ?
-		 ORDER BY c.created_at ASC`, postID)
+		`SELECT id, post_id, user_id, display_name, content, created_at, updated_at
+		 FROM comments
+		 WHERE post_id = ?
+		 ORDER BY created_at ASC`, postID)
 	if err != nil {
 		return nil, err
 	}
@@ -30,8 +29,9 @@ func GetCommentsByPostID(db *sqlx.DB, postID, userID uint64) ([]models.Comment, 
 
 func CreateComment(db *sqlx.DB, postID, userID uint64, content string) (*models.Comment, error) {
 	res, err := db.Exec(
-		`INSERT INTO comments (post_id, user_id, content) VALUES (?, ?, ?)`,
-		postID, userID, content)
+		`INSERT INTO comments (post_id, user_id, display_name, content)
+		 SELECT ?, id, display_name, ? FROM users WHERE id = ?`,
+		postID, content, userID)
 	if err != nil {
 		return nil, err
 	}
@@ -43,10 +43,8 @@ func CreateComment(db *sqlx.DB, postID, userID uint64, content string) (*models.
 
 	var comment models.Comment
 	err = db.Get(&comment,
-		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
-		 FROM comments c
-		 JOIN users u ON u.id = c.user_id
-		 WHERE c.id = ?`, id)
+		`SELECT id, post_id, user_id, display_name, content, created_at, updated_at
+		 FROM comments WHERE id = ?`, id)
 	if err != nil {
 		return nil, err
 	}
@@ -106,10 +104,8 @@ func UpdateComment(db *sqlx.DB, commentID, userID uint64, content string) (*mode
 
 	var comment models.Comment
 	err = db.Get(&comment,
-		`SELECT c.id, c.post_id, c.user_id, u.display_name, c.content, c.created_at, c.updated_at
-		 FROM comments c
-		 JOIN users u ON u.id = c.user_id
-		 WHERE c.id = ?`, commentID)
+		`SELECT id, post_id, user_id, display_name, content, created_at, updated_at
+		 FROM comments WHERE id = ?`, commentID)
 	if err != nil {
 		return nil, err
 	}

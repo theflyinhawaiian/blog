@@ -97,6 +97,25 @@ func getMe(database *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func deleteAccount(database *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		userID, ok := auth.GetSessionUserID(r)
+		if !ok {
+			jsonError(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+		if err := auth.ClearSession(w, r); err != nil {
+			jsonError(w, "session error", http.StatusInternalServerError)
+			return
+		}
+		if err := dbpkg.DeleteUser(database, userID); err != nil {
+			jsonError(w, "failed to delete account", http.StatusInternalServerError)
+			return
+		}
+		w.WriteHeader(http.StatusNoContent)
+	}
+}
+
 func logout(database *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if err := auth.ClearSession(w, r); err != nil {

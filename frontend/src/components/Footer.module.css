@@ -1,0 +1,16 @@
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 4rem;
+  border-top: 1px solid #eee;
+  font-size: 0.85rem;
+}
+
+.link {
+  color: #999;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #555;
+}

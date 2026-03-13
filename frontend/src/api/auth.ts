@@ -11,6 +11,10 @@ export function logout(): Promise<void> {
   return apiFetch<void>('/auth/logout', { method: 'POST' })
 }
 
+export function deleteAccount(): Promise<void> {
+  return apiFetch<void>('/auth/me', { method: 'DELETE' })
+}
+
 export function getLoginUrl(provider: string): string {
   return `${API_URL}/auth/${provider}`
 }

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { fetchMe, logout as apiLogout } from '@api/auth'
+import { fetchMe, logout as apiLogout, deleteAccount as apiDeleteAccount } from '@api/auth'
 
 export function useAuth() {
   const queryClient = useQueryClient()
@@ -17,5 +17,11 @@ export function useAuth() {
     queryClient.invalidateQueries({ queryKey: ['me'] })
   }
 
-  return { user: user ?? null, isLoading, logout }
+  async function deleteAccount() {
+    await apiDeleteAccount()
+    queryClient.setQueryData(['me'], null)
+    queryClient.invalidateQueries({ queryKey: ['me'] })
+  }
+
+  return { user: user ?? null, isLoading, logout, deleteAccount }
 }

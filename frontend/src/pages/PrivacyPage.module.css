@@ -1,0 +1,40 @@
+.main {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  line-height: 1.7;
+}
+
+.main h1 {
+  margin-bottom: 1.5rem;
+}
+
+.main p {
+  margin-bottom: 1.25rem;
+  color: #333;
+}
+
+.deleteSection {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+}
+
+.deleteSection h2 {
+  margin-bottom: 0.75rem;
+}
+
+.deleteBtn {
+  margin-top: 0.5rem;
+  background: #c00;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background: #a00;
+}
