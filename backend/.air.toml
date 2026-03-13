@@ -1,0 +1,13 @@
+[build]
+  cmd = "go build -o ./tmp/main ./main.go"
+  bin = "./tmp/main"
+  include_ext = ["go"]
+  exclude_dir = ["tmp", "vendor"]
+  poll = true
+  poll_interval = 500
+
+[log]
+  time = false
+
+[misc]
+  clean_on_exit = true
