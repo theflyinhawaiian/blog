@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/coreos/go-oidc/v3/oidc"
+	"github.com/peterblog/blog/internal/config"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/facebook"
 	"golang.org/x/oauth2/github"
@@ -34,15 +35,16 @@ func InitProviders(ctx context.Context) error {
 	if err != nil {
 		return fmt.Errorf("google oidc: %w", err)
 	}
+	googleClientID := os.Getenv("GOOGLE_CLIENT_ID")
 	providers["google"] = &ProviderConfig{
 		OAuth2Config: &oauth2.Config{
-			ClientID:     os.Getenv("GOOGLE_CLIENT_ID"),
-			ClientSecret: os.Getenv("GOOGLE_CLIENT_SECRET"),
+			ClientID:     googleClientID,
+			ClientSecret: config.ReadEnv("GOOGLE_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/google/callback",
 			Endpoint:     googleProvider.Endpoint(),
 			Scopes:       []string{oidc.ScopeOpenID, "profile"},
 		},
-		Verifier: googleProvider.Verifier(&oidc.Config{ClientID: os.Getenv("GOOGLE_CLIENT_ID")}),
+		Verifier: googleProvider.Verifier(&oidc.Config{ClientID: googleClientID}),
 		IsOIDC:   true,
 	}
 
@@ -50,7 +52,7 @@ func InitProviders(ctx context.Context) error {
 	providers["github"] = &ProviderConfig{
 		OAuth2Config: &oauth2.Config{
 			ClientID:     os.Getenv("GITHUB_CLIENT_ID"),
-			ClientSecret: os.Getenv("GITHUB_CLIENT_SECRET"),
+			ClientSecret: config.ReadEnv("GITHUB_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/github/callback",
 			Endpoint:     github.Endpoint,
 			Scopes:       []string{"read:user"},
@@ -62,7 +64,7 @@ func InitProviders(ctx context.Context) error {
 	providers["facebook"] = &ProviderConfig{
 		OAuth2Config: &oauth2.Config{
 			ClientID:     os.Getenv("FACEBOOK_CLIENT_ID"),
-			ClientSecret: os.Getenv("FACEBOOK_CLIENT_SECRET"),
+			ClientSecret: config.ReadEnv("FACEBOOK_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/facebook/callback",
 			Endpoint:     facebook.Endpoint,
 			Scopes:       []string{"public_profile"},
@@ -74,7 +76,7 @@ func InitProviders(ctx context.Context) error {
 	providers["linkedin"] = &ProviderConfig{
 		OAuth2Config: &oauth2.Config{
 			ClientID:     os.Getenv("LINKEDIN_CLIENT_ID"),
-			ClientSecret: os.Getenv("LINKEDIN_CLIENT_SECRET"),
+			ClientSecret: config.ReadEnv("LINKEDIN_CLIENT_SECRET"),
 			RedirectURL:  baseURL + "/auth/linkedin/callback",
 			Endpoint: oauth2.Endpoint{
 				AuthURL:  "https://www.linkedin.com/oauth/v2/authorization",

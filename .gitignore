@@ -1,6 +1,7 @@
 # Secrets
 .env.local
 *.p8
+secrets/
 
 # Go
 backend/vendor/

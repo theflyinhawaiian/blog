@@ -1,17 +1,19 @@
 services:
   db:
     image: mysql:8.0
-    environment:
-      MYSQL_DATABASE: blog
-      MYSQL_USER: blog_user
-      MYSQL_PASSWORD: changeme
-      MYSQL_ROOT_PASSWORD: rootpassword
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./db/migrations/001_initial_schema.sql:/docker-entrypoint-initdb.d/001_initial_schema.sql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    secrets:
+      - db_password
+      - db_root_password
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -19,11 +21,32 @@ services:
 
   backend:
     build: ./backend
-    env_file: .env.local
     environment:
       DB_HOST: db
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET_FILE: /run/secrets/google_client_secret
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET_FILE: /run/secrets/github_client_secret
+      FACEBOOK_CLIENT_ID: ${FACEBOOK_CLIENT_ID}
+      FACEBOOK_CLIENT_SECRET_FILE: /run/secrets/facebook_client_secret
+      LINKEDIN_CLIENT_ID: ${LINKEDIN_CLIENT_ID}
+      LINKEDIN_CLIENT_SECRET_FILE: /run/secrets/linkedin_client_secret
+      TWITTER_CLIENT_KEY: ${TWITTER_CLIENT_KEY}
+      SESSION_SECRET_FILE: /run/secrets/session_secret
+      FRONTEND_URL: ${FRONTEND_URL}
+      BACKEND_URL: ${BACKEND_URL}
     ports:
       - "8080:8080"
+    secrets:
+      - db_password
+      - google_client_secret
+      - github_client_secret
+      - facebook_client_secret
+      - linkedin_client_secret
+      - session_secret
     depends_on:
       db:
         condition: service_healthy
@@ -32,11 +55,27 @@ services:
     build:
       context: ./frontend
       args:
-        BACKEND_URL: http://localhost:8080
+        BACKEND_URL: ${BACKEND_URL}
     ports:
       - "3000:3000"
     depends_on:
       - backend
+
+secrets:
+  db_password:
+    file: ./secrets/db_password
+  db_root_password:
+    file: ./secrets/db_root_password
+  google_client_secret:
+    file: ./secrets/google_client_secret
+  github_client_secret:
+    file: ./secrets/github_client_secret
+  facebook_client_secret:
+    file: ./secrets/facebook_client_secret
+  linkedin_client_secret:
+    file: ./secrets/linkedin_client_secret
+  session_secret:
+    file: ./secrets/session_secret
 
 volumes:
   db_data:

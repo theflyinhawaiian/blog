@@ -6,6 +6,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"github.com/peterblog/blog/internal/config"
 )
 
 func Connect() (*sqlx.DB, error) {
@@ -13,7 +14,7 @@ func Connect() (*sqlx.DB, error) {
 	port := os.Getenv("DB_PORT")
 	name := os.Getenv("DB_NAME")
 	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
+	password := config.ReadEnv("DB_PASSWORD")
 
 	if port == "" {
 		port = "3306"

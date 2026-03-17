@@ -2,9 +2,9 @@ package auth
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/gorilla/sessions"
+	"github.com/peterblog/blog/internal/config"
 )
 
 const sessionName = "blog_session"
@@ -13,7 +13,7 @@ const sessionUserKey = "user_id"
 var store *sessions.CookieStore
 
 func InitSessionStore() {
-	secret := os.Getenv("SESSION_SECRET")
+	secret := config.ReadEnv("SESSION_SECRET")
 	if secret == "" {
 		secret = "dev-secret-change-me"
 	}
