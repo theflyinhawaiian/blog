@@ -22,6 +22,7 @@ type ProviderConfig struct {
 	OAuth2Config *oauth2.Config
 	Verifier     *oidc.IDTokenVerifier // nil for non-OIDC providers
 	IsOIDC       bool
+	RequiresPKCE bool
 }
 
 var providers map[string]*ProviderConfig
@@ -87,6 +88,22 @@ func InitProviders(ctx context.Context) error {
 		IsOIDC: false,
 	}
 
+	// X / Twitter (OAuth2 + PKCE, public client — no secret sent)
+	providers["twitter"] = &ProviderConfig{
+		OAuth2Config: &oauth2.Config{
+			ClientID:    os.Getenv("TWITTER_CLIENT_KEY"),
+			RedirectURL: baseURL + "/auth/twitter/callback",
+			Endpoint: oauth2.Endpoint{
+				AuthURL:   "https://twitter.com/i/oauth2/authorize",
+				TokenURL:  "https://api.twitter.com/2/oauth2/token",
+				AuthStyle: oauth2.AuthStyleInParams,
+			},
+			Scopes: []string{"tweet.read", "users.read"},
+		},
+		RequiresPKCE: true,
+		IsOIDC:       false,
+	}
+
 	return nil
 }
 
@@ -130,6 +147,9 @@ func FetchUserInfo(ctx context.Context, provider string, cfg *ProviderConfig, to
 
 	case "linkedin":
 		return fetchLinkedInUser(cfg.OAuth2Config.Client(ctx, token))
+
+	case "twitter":
+		return fetchXUser(cfg.OAuth2Config.Client(ctx, token))
 	}
 
 	return nil, fmt.Errorf("unknown provider: %s", provider)
@@ -200,18 +220,60 @@ func fetchLinkedInUser(client *http.Client) (*UserInfo, error) {
 	return &UserInfo{ProviderUserID: data.Sub, DisplayName: data.Name}, nil
 }
 
-// ExchangeCode exchanges the authorization code for a token.
-func ExchangeCode(ctx context.Context, cfg *ProviderConfig, code string, extraSecret ...string) (*oauth2.Token, error) {
-	oauthCfg := *cfg.OAuth2Config
-	if len(extraSecret) > 0 {
-		oauthCfg.ClientSecret = extraSecret[0]
+func fetchXUser(client *http.Client) (*UserInfo, error) {
+	resp, err := client.Get("https://api.twitter.com/2/users/me?user.fields=name")
+	if err != nil {
+		return nil, err
 	}
-	return oauthCfg.Exchange(ctx, code)
+	defer resp.Body.Close()
+	body, _ := io.ReadAll(resp.Body)
+
+	var data struct {
+		Data struct {
+			ID       string `json:"id"`
+			Name     string `json:"name"`
+			Username string `json:"username"`
+		} `json:"data"`
+	}
+	if err := json.Unmarshal(body, &data); err != nil {
+		return nil, err
+	}
+
+	name := data.Data.Name
+	if name == "" {
+		name = data.Data.Username
+	}
+	return &UserInfo{ProviderUserID: data.Data.ID, DisplayName: name}, nil
+}
+
+// ExchangeCode exchanges the authorization code for a token.
+func ExchangeCode(ctx context.Context, cfg *ProviderConfig, code string, opts ...oauth2.AuthCodeOption) (*oauth2.Token, error) {
+	return cfg.OAuth2Config.Exchange(ctx, code, opts...)
 }
 
 // AuthCodeURL returns the provider's authorization URL.
-func AuthCodeURL(cfg *ProviderConfig, state string) string {
-	return cfg.OAuth2Config.AuthCodeURL(state)
+func AuthCodeURL(cfg *ProviderConfig, state string, opts ...oauth2.AuthCodeOption) string {
+	return cfg.OAuth2Config.AuthCodeURL(state, opts...)
+}
+
+// StorePKCEVerifier saves the PKCE code verifier in the session.
+func StorePKCEVerifier(w http.ResponseWriter, r *http.Request, verifier string) error {
+	session, err := GetSession(r)
+	if err != nil {
+		return err
+	}
+	session.Values["pkce_verifier"] = verifier
+	return session.Save(r, w)
+}
+
+// GetPKCEVerifier retrieves the PKCE code verifier from the session.
+func GetPKCEVerifier(r *http.Request) (string, bool) {
+	session, err := GetSession(r)
+	if err != nil {
+		return "", false
+	}
+	v, ok := session.Values["pkce_verifier"].(string)
+	return v, ok
 }
 
 // OAuthStateParam generates a CSRF state token.

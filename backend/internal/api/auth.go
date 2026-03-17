@@ -26,7 +26,17 @@ func startAuth(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		http.Redirect(w, r, auth.AuthCodeURL(cfg, state), http.StatusFound)
+		var authOpts []oauth2.AuthCodeOption
+		if cfg.RequiresPKCE {
+			verifier := oauth2.GenerateVerifier()
+			if err := auth.StorePKCEVerifier(w, r, verifier); err != nil {
+				jsonError(w, "session error", http.StatusInternalServerError)
+				return
+			}
+			authOpts = append(authOpts, oauth2.S256ChallengeOption(verifier))
+		}
+
+		http.Redirect(w, r, auth.AuthCodeURL(cfg, state, authOpts...), http.StatusFound)
 	}
 }
 
@@ -51,7 +61,16 @@ func callbackAuth(database *sqlx.DB) http.HandlerFunc {
 		var token *oauth2.Token
 		var exchangeErr error
 
-		token, exchangeErr = auth.ExchangeCode(r.Context(), cfg, code)
+		var exchangeOpts []oauth2.AuthCodeOption
+		if cfg.RequiresPKCE {
+			verifier, ok := auth.GetPKCEVerifier(r)
+			if !ok {
+				http.Redirect(w, r, auth.RedirectToFrontend("/login?error=missing_verifier"), http.StatusFound)
+				return
+			}
+			exchangeOpts = append(exchangeOpts, oauth2.VerifierOption(verifier))
+		}
+		token, exchangeErr = auth.ExchangeCode(r.Context(), cfg, code, exchangeOpts...)
 
 		if exchangeErr != nil {
 			http.Redirect(w, r, auth.RedirectToFrontend("/login?error=token_exchange"), http.StatusFound)
