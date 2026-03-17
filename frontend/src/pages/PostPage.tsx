@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { usePost } from '@hooks/usePosts'
@@ -10,6 +11,7 @@ import { CommentList } from '@components/CommentList'
 import styles from './PostPage.module.css'
 
 export function PostPage() {
+  const contentRef = useRef<HTMLElement>(null)
   const { slug } = useParams<{ slug: string }>()
   const { data: post, isLoading, error } = usePost(slug ?? '')
   const { data: comments = [] } = useComments(slug ?? '')
@@ -39,11 +41,11 @@ export function PostPage() {
         {heroImage && <meta name="twitter:image" content={heroImage} />}
       </Helmet>
 
-      <ReadingProgressBar />
+      <ReadingProgressBar targetRef={contentRef} />
 
       {heroImage && <HeroImage src={heroImage} alt={post.title} />}
 
-      <main className={styles.main}>
+      <main ref={contentRef} className={styles.main}>
         <h1 className={styles.title}>{post.title}</h1>
         <time className={styles.date}>
           {new Date(post.created_at).toLocaleDateString()}

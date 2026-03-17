@@ -1,20 +1,23 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, RefObject } from 'react'
 
-export function useReadingProgress(): number {
+export function useReadingProgress(targetRef: RefObject<HTMLElement | null>): number {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
     let rafId: number
 
     function update() {
-      const el = document.documentElement
-      const scrollTop = el.scrollTop || document.body.scrollTop
-      const scrollHeight = el.scrollHeight - el.clientHeight
-      if (scrollHeight <= 0) {
-        setProgress(0)
+      const el = targetRef.current
+      if (!el) return
+
+      const elTop = el.getBoundingClientRect().top + window.scrollY
+      const scrollable = el.offsetHeight - window.innerHeight
+      if (scrollable <= 0) {
+        setProgress(100)
         return
       }
-      setProgress(Math.min(100, (scrollTop / scrollHeight) * 100))
+      const scrolled = window.scrollY - elTop
+      setProgress(Math.min(100, Math.max(0, (scrolled / scrollable) * 100)))
     }
 
     function onScroll() {
@@ -29,7 +32,7 @@ export function useReadingProgress(): number {
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(rafId)
     }
-  }, [])
+  }, [targetRef])
 
   return progress
 }
