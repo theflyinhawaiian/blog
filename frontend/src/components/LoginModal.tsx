@@ -1,13 +1,14 @@
 import { useEffect } from 'react'
-import { FaGoogle, FaFacebook, FaLinkedin, FaGithub } from 'react-icons/fa'
+import { FaGoogle, FaLinkedin, FaGithub, FaTwitter } from 'react-icons/fa'
 import { getLoginUrl } from '@api/auth'
 import styles from './LoginModal.module.css'
 
 const PROVIDERS = [
   { id: 'google',   label: 'Continue with Google',   color: '#4285f4', Icon: FaGoogle },
-  { id: 'facebook', label: 'Continue with Facebook', color: '#1877f2', Icon: FaFacebook },
+  //{ id: 'facebook', label: 'Continue with Facebook', color: '#1877f2', Icon: FaFacebook },
   { id: 'linkedin', label: 'Continue with LinkedIn', color: '#0077b5', Icon: FaLinkedin },
   { id: 'github',   label: 'Continue with GitHub',   color: '#333',    Icon: FaGithub },
+  { id: 'twitter',  label: 'Continue with Twitter',  color: '#1da1f2', Icon: FaTwitter },
 ]
 
 interface Props {
