@@ -22,7 +22,6 @@ services:
   backend:
     build:
       context: ./backend
-      target: dev
     env_file: .env.local
     environment:
       DB_HOST: db
@@ -35,8 +34,6 @@ services:
       SESSION_SECRET_FILE: /run/secrets/session_secret
     ports:
       - "8080:8080"
-    volumes:
-      - ./backend:/app
     secrets:
       - db_password
       - google_client_secret
@@ -52,14 +49,10 @@ services:
   frontend:
     build:
       context: ./frontend
-      target: dev
       args:
         BACKEND_URL: ${BACKEND_URL}
     ports:
       - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
 
