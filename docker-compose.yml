@@ -26,10 +26,25 @@ services:
     env_file: .env.local
     environment:
       DB_HOST: db
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      GOOGLE_CLIENT_SECRET_FILE: /run/secrets/google_client_secret
+      GITHUB_CLIENT_SECRET_FILE: /run/secrets/github_client_secret
+      FACEBOOK_CLIENT_SECRET_FILE: /run/secrets/facebook_client_secret
+      LINKEDIN_CLIENT_SECRET_FILE: /run/secrets/linkedin_client_secret
+      TWITTER_CLIENT_SECRET_FILE: /run/secrets/twitter_client_secret
+      SESSION_SECRET_FILE: /run/secrets/session_secret
     ports:
       - "8080:8080"
     volumes:
       - ./backend:/app
+    secrets:
+      - db_password
+      - google_client_secret
+      - github_client_secret
+      - facebook_client_secret
+      - linkedin_client_secret
+      - twitter_client_secret
+      - session_secret
     depends_on:
       db:
         condition: service_healthy
@@ -39,7 +54,7 @@ services:
       context: ./frontend
       target: dev
       args:
-        BACKEND_URL: http://localhost:8080
+        BACKEND_URL: ${BACKEND_URL}
     ports:
       - "3000:3000"
     volumes:
@@ -53,6 +68,18 @@ secrets:
     file: ./secrets/db_password
   db_root_password:
     file: ./secrets/db_root_password
+  google_client_secret:
+    file: ./secrets/google_client_secret
+  github_client_secret:
+    file: ./secrets/github_client_secret
+  facebook_client_secret:
+    file: ./secrets/facebook_client_secret
+  linkedin_client_secret:
+    file: ./secrets/linkedin_client_secret
+  twitter_client_secret:
+    file: ./secrets/twitter_client_secret
+  session_secret:
+    file: ./secrets/session_secret
 
 volumes:
   db_data:
