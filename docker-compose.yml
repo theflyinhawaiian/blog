@@ -22,7 +22,6 @@ services:
   backend:
     build:
       context: ./backend
-    env_file: .env.local
     environment:
       DB_HOST: db
       DB_PASSWORD_FILE: /run/secrets/db_password
@@ -49,8 +48,6 @@ services:
   frontend:
     build:
       context: ./frontend
-      args:
-        BACKEND_URL: ${BACKEND_URL}
     ports:
       - "3000:3000"
     depends_on:
