@@ -27,7 +27,6 @@ services:
       DB_PASSWORD_FILE: /run/secrets/db_password
       GOOGLE_CLIENT_SECRET_FILE: /run/secrets/google_client_secret
       GITHUB_CLIENT_SECRET_FILE: /run/secrets/github_client_secret
-      FACEBOOK_CLIENT_SECRET_FILE: /run/secrets/facebook_client_secret
       LINKEDIN_CLIENT_SECRET_FILE: /run/secrets/linkedin_client_secret
       TWITTER_CLIENT_SECRET_FILE: /run/secrets/twitter_client_secret
       SESSION_SECRET_FILE: /run/secrets/session_secret
@@ -37,7 +36,6 @@ services:
       - db_password
       - google_client_secret
       - github_client_secret
-      - facebook_client_secret
       - linkedin_client_secret
       - twitter_client_secret
       - session_secret
@@ -62,8 +60,6 @@ secrets:
     file: ./secrets/google_client_secret
   github_client_secret:
     file: ./secrets/github_client_secret
-  facebook_client_secret:
-    file: ./secrets/facebook_client_secret
   linkedin_client_secret:
     file: ./secrets/linkedin_client_secret
   twitter_client_secret:
