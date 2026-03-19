@@ -16,9 +16,8 @@ export function Header() {
 
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.logo}>
-        Blog
-      </Link>
+      <div />
+      <Link to="/" className={styles.logo}>Pete's Blog</Link>
       <nav>
         {isLoading ? null : user ? (
           <span className={styles.userNav}>
