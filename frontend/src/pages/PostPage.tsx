@@ -27,7 +27,7 @@ export function PostPage() {
   return (
     <>
       <Helmet>
-        <title>{post.title}</title>
+        <title>Pete's blog - {post.title}</title>
         {metaDesc && <meta name="description" content={metaDesc} />}
         <link rel="canonical" href={canonicalUrl} />
         <meta property="og:title" content={post.title} />
