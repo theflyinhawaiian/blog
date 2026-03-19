@@ -14,7 +14,7 @@ type Post struct {
 	MetaDescription sql.NullString `db:"meta_description" json:"meta_description,omitempty"`
 	CanonicalURL    sql.NullString `db:"canonical_url" json:"canonical_url,omitempty"`
 	PostImage       sql.NullString `db:"post_image" json:"post_image,omitempty"`
-	Tags            []byte         `db:"tags" json:"tags,omitempty"`
+	Tags            []string       `db:"-" json:"tags,omitempty"`
 	CreatedAt       time.Time      `db:"created_at" json:"created_at"`
 	UpdatedAt       time.Time      `db:"updated_at" json:"updated_at"`
 }
@@ -25,6 +25,6 @@ type PostSummary struct {
 	Slug      string         `db:"slug" json:"slug"`
 	Excerpt   sql.NullString `db:"excerpt" json:"excerpt,omitempty"`
 	PostImage sql.NullString `db:"post_image" json:"post_image,omitempty"`
-	Tags      []byte         `db:"tags" json:"tags,omitempty"`
+	Tags      []string       `db:"-" json:"tags,omitempty"`
 	CreatedAt time.Time      `db:"created_at" json:"created_at"`
 }

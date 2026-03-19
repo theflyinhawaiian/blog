@@ -22,6 +22,9 @@ export function CommentItem({ comment }: Props) {
   const [editing, setEditing] = useState(false)
   const [editContent, setEditContent] = useState(comment.content)
 
+  console.log(`user: ${JSON.stringify(user)}`);
+  console.log(`comment's user: ${JSON.stringify(comment.user_id)}`);
+
   const isOwner = user?.id === comment.user_id
 
   function handleSave() {

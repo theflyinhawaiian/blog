@@ -4,7 +4,7 @@ export interface PostSummary {
   slug: string
   excerpt?: { String: string; Valid: boolean }
   post_image?: { String: string; Valid: boolean }
-  tags?: unknown
+  tags?: string[]
   created_at: string
 }
 

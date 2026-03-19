@@ -157,4 +157,3 @@ func ToggleReaction(db *sqlx.DB, commentID, userID uint64, emoji string) (*model
 
 	return &models.Reaction{Emoji: emoji, Count: count, ReactedByMe: reactedByMe}, nil
 }
-
