@@ -8,7 +8,7 @@ import (
 func GetCommentsByPostID(db *sqlx.DB, postID, userID uint64) ([]models.Comment, error) {
 	var comments []models.Comment
 	err := db.Select(&comments,
-		`SELECT id, post_id, user_id, display_name, content, created_at, updated_at
+		`SELECT id, post_id, display_name, content, created_at, updated_at
 		 FROM comments
 		 WHERE post_id = ?
 		 ORDER BY created_at ASC`, postID)
