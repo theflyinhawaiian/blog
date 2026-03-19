@@ -1,7 +1,7 @@
 import { User } from '@typedef/user'
 import { apiFetch } from './client'
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080'
+const API_URL = import.meta.env.VITE_BACKEND_URL
 
 export function fetchMe(): Promise<User> {
   return apiFetch<User>('/auth/me')

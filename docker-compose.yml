@@ -46,6 +46,8 @@ services:
   frontend:
     build:
       context: ./frontend
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
     ports:
       - "3000:3000"
     depends_on:

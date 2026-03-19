@@ -1,7 +1,7 @@
 FROM node:20-alpine AS base
 
-ARG VITE_BACKEND_URL=http://localhost:8080
-ENV VITE_BACKEND_URL=http://localhost:8080
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
