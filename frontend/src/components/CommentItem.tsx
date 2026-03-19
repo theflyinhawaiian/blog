@@ -8,6 +8,12 @@ import { useUpdateComment, useDeleteComment, useAddReaction } from '@hooks/useCo
 import { MarkdownContent } from './MarkdownContent'
 import styles from './CommentItem.module.css'
 
+function decodeHtml(html: string): string {
+  const el = document.createElement('textarea')
+  el.innerHTML = html
+  return el.value
+}
+
 interface Props {
   comment: Comment
 }
@@ -20,7 +26,7 @@ export function CommentItem({ comment }: Props) {
   const addReaction = useAddReaction(slug)
   const [confirming, setConfirming] = useState(false)
   const [editing, setEditing] = useState(false)
-  const [editContent, setEditContent] = useState(comment.content)
+  const [editContent, setEditContent] = useState(decodeHtml(comment.content))
 
   console.log(`user: ${JSON.stringify(user)}`);
   console.log(`comment's user: ${JSON.stringify(comment.user_id)}`);
@@ -78,7 +84,7 @@ export function CommentItem({ comment }: Props) {
             </button>
             <button
               className={styles.cancelBtn}
-              onClick={() => { setEditing(false); setEditContent(comment.content) }}
+              onClick={() => { setEditing(false); setEditContent(decodeHtml(comment.content)) }}
             >
               Cancel
             </button>
