@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.BACKEND_URL || 'http://localhost:8080'
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080'
 
 export async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
