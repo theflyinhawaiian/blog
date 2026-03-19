@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { usePost } from '@hooks/usePosts'
 import { useComments } from '@hooks/useComments'
@@ -50,6 +50,16 @@ export function PostPage() {
         <time className={styles.date}>
           {new Date(post.created_at).toLocaleDateString()}
         </time>
+
+        {post.tags && post.tags.length > 0 && (
+          <div className={styles.tags}>
+            {post.tags.map(tag => (
+              <Link key={tag} to={`/tags/${tag}`} className={styles.tag}>
+                #{tag}
+              </Link>
+            ))}
+          </div>
+        )}
 
         <MarkdownContent content={post.content} className={`post-content ${styles.content}`} />
 

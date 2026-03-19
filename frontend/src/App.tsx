@@ -7,6 +7,7 @@ import { Footer } from '@components/Footer'
 import { LoginModal } from '@components/LoginModal'
 import { HomePage } from '@pages/HomePage'
 import { PostPage } from '@pages/PostPage'
+import { TagPage } from '@pages/TagPage'
 import { PrivacyPage } from '@pages/PrivacyPage'
 import { LoginModalContext } from '@hooks/useLoginModal'
 
@@ -32,6 +33,7 @@ export function App() {
               <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/posts/:slug" element={<PostPage />} />
+                <Route path="/tags/:tag" element={<TagPage />} />
                 <Route path="/privacy" element={<PrivacyPage />} />
               </Routes>
             </div>
