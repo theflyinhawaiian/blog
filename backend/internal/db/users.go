@@ -63,7 +63,7 @@ func UpsertUser(db *sqlx.DB, provider, providerUserID, displayName string) (*mod
 
 func DeleteUser(db *sqlx.DB, userID uint64) error {
 	_, err := db.Exec(
-		`UPDATE comments SET user_id = -1, display_name = 'Deleted user' WHERE user_id = ?`,
+		`UPDATE comments SET user_id = NULL, display_name = 'Deleted user' WHERE user_id = ?`,
 		userID)
 	if err != nil {
 		return err
