@@ -27,7 +27,7 @@ export function Header() {
             </button>
           </span>
         ) : (
-          <button onClick={openLoginModal} className={styles.loginLink}>
+          <button onClick={() => openLoginModal()} className={styles.loginLink}>
             Login
           </button>
         )}
