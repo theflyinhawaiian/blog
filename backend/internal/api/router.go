@@ -22,6 +22,8 @@ func NewRouter(database *sqlx.DB) *chi.Mux {
 		r.With(middleware.RequireAuth).Post("/comments/{id}/reactions", addReaction(database))
 	})
 
+	r.Get("/og/posts/{slug}", getOGTags(database))
+
 	r.Route("/auth", func(r chi.Router) {
 		r.Get("/{provider}", startAuth(database))
 		r.Get("/{provider}/callback", callbackAuth(database))
