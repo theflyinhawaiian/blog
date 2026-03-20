@@ -25,8 +25,13 @@
   resize: vertical;
 }
 
-.submitBtn {
+.actions {
+  display: flex;
+  gap: 0.5rem;
   margin-top: 0.5rem;
+}
+
+.submitBtn {
   padding: 0.5rem 1.25rem;
   background: #0070f3;
   color: #fff;
@@ -38,4 +43,18 @@
 
 .submitBtn:disabled {
   opacity: 0.6;
+}
+
+.clearBtn {
+  padding: 0.5rem 1rem;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.clearBtn:disabled {
+  opacity: 0.4;
 }

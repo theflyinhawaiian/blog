@@ -38,13 +38,23 @@ export function CommentForm() {
         className={styles.textarea}
         required
       />
-      <button
-        type="submit"
-        disabled={createComment.isPending || !content.trim()}
-        className={styles.submitBtn}
-      >
-        {createComment.isPending ? 'Posting...' : 'Post comment'}
-      </button>
+      <div className={styles.actions}>
+        <button
+          type="submit"
+          disabled={createComment.isPending || !content.trim()}
+          className={styles.submitBtn}
+        >
+          {createComment.isPending ? 'Posting...' : 'Post comment'}
+        </button>
+        <button
+          type="button"
+          disabled={!content}
+          onClick={() => setContent('')}
+          className={styles.clearBtn}
+        >
+          Clear
+        </button>
+      </div>
     </form>
   )
 }
