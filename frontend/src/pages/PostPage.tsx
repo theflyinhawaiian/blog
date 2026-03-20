@@ -45,23 +45,25 @@ export function PostPage() {
 
       {heroImage && <HeroImage src={heroImage} alt={post.title} />}
 
-      <main ref={contentRef} className={styles.main}>
-        <h1 className={styles.title}>{post.title}</h1>
-        <time className={styles.date}>
-          {new Date(post.created_at).toLocaleDateString()}
-        </time>
+      <main className={styles.main}>
+        <article ref={contentRef}>
+          <h1 className={styles.title}>{post.title}</h1>
+          <time className={styles.date}>
+            {new Date(post.created_at).toLocaleDateString()}
+          </time>
 
-        {post.tags && post.tags.length > 0 && (
-          <div className={styles.tags}>
-            {post.tags.map(tag => (
-              <Link key={tag} to={`/tags/${tag}`} className={styles.tag}>
-                #{tag}
-              </Link>
-            ))}
-          </div>
-        )}
+          {post.tags && post.tags.length > 0 && (
+            <div className={styles.tags}>
+              {post.tags.map(tag => (
+                <Link key={tag} to={`/tags/${tag}`} className={styles.tag}>
+                  #{tag}
+                </Link>
+              ))}
+            </div>
+          )}
 
-        <MarkdownContent content={post.content} className={`post-content ${styles.content}`} />
+          <MarkdownContent content={post.content} className={`post-content ${styles.content}`} />
+        </article>
 
         <ShareSection url={postUrl} title={post.title} />
 
