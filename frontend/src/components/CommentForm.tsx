@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useAuth } from '@hooks/useAuth'
 import { useLoginModal } from '@hooks/useLoginModal'
 import { useCreateComment } from '@hooks/useComments'
@@ -9,13 +9,14 @@ export function CommentForm() {
   const { slug = '' } = useParams<{ slug: string }>()
   const { user } = useAuth()
   const { openLoginModal } = useLoginModal()
+  const location = useLocation()
   const createComment = useCreateComment(slug)
   const [content, setContent] = useState('')
 
   if (!user) {
     return (
       <p className={styles.loginPrompt}>
-        <button onClick={openLoginModal} className={styles.loginLink}>Log in</button> to leave a comment.
+        <button onClick={() => openLoginModal(location.pathname + '#comments')} className={styles.loginLink}>Log in</button> to leave a comment.
       </p>
     )
   }

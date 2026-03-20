@@ -1,15 +1,14 @@
-import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { HelmetProvider } from 'react-helmet-async'
 import { Header } from '@components/Header'
 import { Footer } from '@components/Footer'
-import { LoginModal } from '@components/LoginModal'
+import { LoginModalProvider } from '@components/LoginModalProvider'
+import { ScrollToHash } from '@components/ScrollToHash'
 import { HomePage } from '@pages/HomePage'
 import { PostPage } from '@pages/PostPage'
 import { TagPage } from '@pages/TagPage'
 import { PrivacyPage } from '@pages/PrivacyPage'
-import { LoginModalContext } from '@hooks/useLoginModal'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,13 +20,12 @@ const queryClient = new QueryClient({
 })
 
 export function App() {
-  const [loginOpen, setLoginOpen] = useState(false)
-
   return (
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
-        <LoginModalContext.Provider value={{ openLoginModal: () => setLoginOpen(true) }}>
+        <LoginModalProvider>
           <BrowserRouter>
+            <ScrollToHash />
             <Header />
             <div style={{ flex: 1 }}>
               <Routes>
@@ -38,9 +36,8 @@ export function App() {
               </Routes>
             </div>
             <Footer />
-            <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
           </BrowserRouter>
-        </LoginModalContext.Provider>
+        </LoginModalProvider>
       </QueryClientProvider>
     </HelmetProvider>
   )

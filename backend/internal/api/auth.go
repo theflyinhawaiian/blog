@@ -20,8 +20,9 @@ func startAuth(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		state := auth.OAuthStateParam()
-		if err := auth.StoreOAuthState(w, r, state); err != nil {
+		returnTo := sanitizeReturnPath(r.URL.Query().Get("return"))
+		state, csrf := auth.NewOAuthState(returnTo)
+		if err := auth.StoreOAuthState(w, r, csrf); err != nil {
 			jsonError(w, "session error", http.StatusInternalServerError)
 			return
 		}
@@ -53,7 +54,8 @@ func callbackAuth(database *sqlx.DB) http.HandlerFunc {
 		code := r.URL.Query().Get("code")
 		state := r.URL.Query().Get("state")
 
-		if !auth.ValidateOAuthState(r, state) {
+		returnTo, ok := auth.ValidateOAuthState(r, state)
+		if !ok {
 			http.Redirect(w, r, auth.RedirectToFrontend("/login?error=invalid_state"), http.StatusFound)
 			return
 		}
@@ -94,8 +96,20 @@ func callbackAuth(database *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		http.Redirect(w, r, auth.RedirectToFrontend("/"), http.StatusFound)
+		dest := "/"
+		if returnTo != "" {
+			dest = returnTo
+		}
+		http.Redirect(w, r, auth.RedirectToFrontend(dest), http.StatusFound)
 	}
+}
+
+// sanitizeReturnPath ensures the return path is a safe relative path to prevent open redirects.
+func sanitizeReturnPath(p string) string {
+	if p == "" || p[0] != '/' || len(p) > 1 && p[1] == '/' {
+		return ""
+	}
+	return p
 }
 
 func getMe(database *sqlx.DB) http.HandlerFunc {

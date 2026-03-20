@@ -9,7 +9,7 @@ interface Props {
 
 export function CommentList({ comments }: Props) {
   return (
-    <section className={styles.section}>
+    <section id="comments" className={styles.section}>
       <h2 className={styles.heading}>
         Comments ({comments.length})
       </h2>

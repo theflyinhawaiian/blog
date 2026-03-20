@@ -14,9 +14,10 @@ const PROVIDERS = [
 interface Props {
   open: boolean
   onClose: () => void
+  returnTo?: string
 }
 
-export function LoginModal({ open, onClose }: Props) {
+export function LoginModal({ open, onClose, returnTo }: Props) {
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
@@ -36,7 +37,7 @@ export function LoginModal({ open, onClose }: Props) {
           {PROVIDERS.map((p) => (
             <a
               key={p.id}
-              href={getLoginUrl(p.id)}
+              href={getLoginUrl(p.id, returnTo)}
               className={styles.providerBtn}
               style={{ background: p.color }}
             >

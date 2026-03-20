@@ -276,37 +276,57 @@ func GetPKCEVerifier(r *http.Request) (string, bool) {
 	return v, ok
 }
 
-// OAuthStateParam generates a CSRF state token.
-func OAuthStateParam() string {
-	b := make([]byte, 16)
-	_, _ = rand.Read(b)
-	return base64.RawURLEncoding.EncodeToString(b)
+type oauthState struct {
+	CSRF     string `json:"csrf"`
+	ReturnTo string `json:"return,omitempty"`
 }
 
-// StoreOAuthState saves state in session for CSRF check.
-func StoreOAuthState(w http.ResponseWriter, r *http.Request, state string) error {
+// NewOAuthState generates a CSRF token and encodes it with an optional return path into the state parameter.
+func NewOAuthState(returnTo string) (state, csrf string) {
+	b := make([]byte, 16)
+	_, _ = rand.Read(b)
+	csrf = base64.RawURLEncoding.EncodeToString(b)
+	s := oauthState{CSRF: csrf, ReturnTo: returnTo}
+	encoded, _ := json.Marshal(s)
+	return base64.RawURLEncoding.EncodeToString(encoded), csrf
+}
+
+// StoreOAuthState saves the CSRF token in session for later validation.
+func StoreOAuthState(w http.ResponseWriter, r *http.Request, csrf string) error {
 	session, err := GetSession(r)
 	if err != nil {
 		return err
 	}
-	session.Values["oauth_state"] = state
+	session.Values["oauth_state"] = csrf
 	return session.Save(r, w)
 }
 
-// ValidateOAuthState checks state matches.
-func ValidateOAuthState(r *http.Request, state string) bool {
+// ValidateOAuthState decodes the state parameter, validates the CSRF token against the session,
+// and returns the embedded return path.
+func ValidateOAuthState(r *http.Request, state string) (returnTo string, ok bool) {
+	decoded, err := base64.RawURLEncoding.DecodeString(state)
+	if err != nil {
+		return "", false
+	}
+	var s oauthState
+	if err := json.Unmarshal(decoded, &s); err != nil {
+		return "", false
+	}
 	session, err := GetSession(r)
 	if err != nil {
-		return false
+		return "", false
 	}
 	stored, ok := session.Values["oauth_state"].(string)
-	return ok && stored == state
+	if !ok || stored != s.CSRF {
+		return "", false
+	}
+	return s.ReturnTo, true
 }
 
 // RedirectToFrontend builds a frontend redirect URL.
 func RedirectToFrontend(path string) string {
 	base := os.Getenv("FRONTEND_URL")
 	u, _ := url.Parse(base)
-	u.Path = path
-	return u.String()
+	ref, _ := url.Parse(path)
+	return u.ResolveReference(ref).String()
 }

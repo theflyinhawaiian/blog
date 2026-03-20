@@ -15,6 +15,7 @@ export function deleteAccount(): Promise<void> {
   return apiFetch<void>('/auth/me', { method: 'DELETE' })
 }
 
-export function getLoginUrl(provider: string): string {
-  return `${API_URL}/auth/${provider}`
+export function getLoginUrl(provider: string, returnTo?: string): string {
+  const url = `${API_URL}/auth/${provider}`
+  return returnTo ? `${url}?return=${encodeURIComponent(returnTo)}` : url
 }
