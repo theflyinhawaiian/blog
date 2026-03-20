@@ -9,6 +9,12 @@ import { useCommentEditStore } from '@store/commentStore'
 import { MarkdownContent } from './MarkdownContent'
 import styles from './CommentItem.module.css'
 
+function relativeTime(isoString: string): string {
+  const dt = DateTime.fromISO(isoString)
+  if (DateTime.now().diff(dt, 'seconds').seconds < 30) return 'just now'
+  return dt.toRelative() ?? ''
+}
+
 function decodeHtml(html: string): string {
   const el = document.createElement('textarea')
   el.innerHTML = html
@@ -53,14 +59,14 @@ export function CommentItem({ comment }: Props) {
             className={styles.date}
             title={DateTime.fromISO(comment.created_at).toLocaleString(DateTime.DATETIME_FULL)}
           >
-            {DateTime.fromISO(comment.created_at).toRelative()}
+            {relativeTime(comment.created_at)}
           </time>
           {comment.updated_at && (
             <span
               className={styles.edited}
               title={DateTime.fromISO(comment.updated_at).toLocaleString(DateTime.DATETIME_FULL)}
             >
-              edited {DateTime.fromISO(comment.updated_at).toRelative()}
+              edited {relativeTime(comment.updated_at)}
             </span>
           )}
         </div>
