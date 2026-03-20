@@ -29,11 +29,12 @@ export function PrivacyPage() {
 
         <p>I will never sell or share your data with third parties. Data is used solely to operate this blog.</p>
 
-        <p>If you wish to have your account and associated data removed, you may do so below. Your comments will remain but will be anonymized.</p>
-
         {user && (
           <div className={styles.deleteSection}>
             <h2>Delete Your Data</h2>
+            
+            <p>If you wish to have your account and associated data removed, you may do so below.</p>
+
             <p>This will permanently delete your account and log you out. Your comments will remain but will be attributed to "Deleted user".</p>
             <button className={styles.deleteBtn} onClick={() => setConfirmOpen(true)}>
               Delete my account
