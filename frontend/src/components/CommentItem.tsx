@@ -5,6 +5,7 @@ import { Comment } from '@typedef/comment'
 import { ReactionPicker } from './ReactionPicker'
 import { useAuth } from '@hooks/useAuth'
 import { useUpdateComment, useDeleteComment, useAddReaction } from '@hooks/useComments'
+import { useCommentEditStore } from '@store/commentStore'
 import { MarkdownContent } from './MarkdownContent'
 import styles from './CommentItem.module.css'
 
@@ -25,22 +26,21 @@ export function CommentItem({ comment }: Props) {
   const deleteComment = useDeleteComment(slug)
   const addReaction = useAddReaction(slug)
   const [confirming, setConfirming] = useState(false)
-  const [editing, setEditing] = useState(false)
   const [editContent, setEditContent] = useState(decodeHtml(comment.content))
 
-  console.log(`user: ${JSON.stringify(user)}`);
-  console.log(`comment's user: ${JSON.stringify(comment.user_id)}`);
+  const { editingId, startEdit, stopEdit } = useCommentEditStore()
+  const editing = editingId === comment.id
 
   const isOwner = user?.id === comment.user_id
 
   function handleSave() {
     if (!editContent.trim() || editContent === comment.content) {
-      setEditing(false)
+      stopEdit()
       return
     }
     updateComment.mutate(
       { commentId: comment.id, content: editContent },
-      { onSuccess: () => setEditing(false) },
+      { onSuccess: () => stopEdit() },
     )
   }
 
@@ -84,7 +84,7 @@ export function CommentItem({ comment }: Props) {
             </button>
             <button
               className={styles.cancelBtn}
-              onClick={() => { setEditing(false); setEditContent(decodeHtml(comment.content)) }}
+              onClick={() => { stopEdit(); setEditContent(decodeHtml(comment.content)) }}
             >
               Cancel
             </button>
@@ -109,7 +109,7 @@ export function CommentItem({ comment }: Props) {
         </div>
         {isOwner && !editing && (
           <div className={styles.ownerActions}>
-            <button className={styles.editBtn} onClick={() => setEditing(true)}>Edit</button>
+            <button className={styles.editBtn} onClick={() => startEdit(comment.id)}>Edit</button>
             {confirming ? (
               <span className={styles.confirmDelete}>
                 Delete?{' '}

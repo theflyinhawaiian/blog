@@ -23,7 +23,8 @@
       "@components/*": ["src/components/*"],
       "@hooks/*": ["src/hooks/*"],
       "@pages/*": ["src/pages/*"],
-      "@typedef/*": ["src/types/*"]
+      "@typedef/*": ["src/types/*"],
+      "@store/*": ["src/store/*"]
     }
   },
   "include": ["src"]
