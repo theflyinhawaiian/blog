@@ -28,4 +28,11 @@
   border: 1px solid #ccc;
   background: #f5f5f5;
   color: #333;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.copyBtnSuccess {
+  background: #e6f4ea;
+  border-color: #34a853;
+  color: #1e7e34;
 }

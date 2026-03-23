@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import styles from './ShareSection.module.css'
 
 interface Props {
@@ -8,9 +9,13 @@ interface Props {
 export function ShareSection({ url, title }: Props) {
   const encoded = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
+  const [copied, setCopied] = useState(false)
 
   function copyLink() {
-    navigator.clipboard.writeText(url)
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    })
   }
 
   return (
@@ -50,8 +55,8 @@ export function ShareSection({ url, title }: Props) {
       >
         Email
       </a>
-      <button onClick={copyLink} className={styles.copyBtn}>
-        Copy link
+      <button onClick={copyLink} className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`}>
+        {copied ? 'Copied!' : 'Copy link'}
       </button>
     </div>
   )
