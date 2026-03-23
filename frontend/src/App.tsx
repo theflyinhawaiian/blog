@@ -5,6 +5,7 @@ import { Header } from '@components/Header'
 import { Footer } from '@components/Footer'
 import { LoginModalProvider } from '@components/LoginModalProvider'
 import { ScrollToHash } from '@components/ScrollToHash'
+import { BackToTop } from '@components/BackToTop'
 import { HomePage } from '@pages/HomePage'
 import { PostPage } from '@pages/PostPage'
 import { TagPage } from '@pages/TagPage'
@@ -36,6 +37,7 @@ export function App() {
               </Routes>
             </div>
             <Footer />
+            <BackToTop />
           </BrowserRouter>
         </LoginModalProvider>
       </QueryClientProvider>
