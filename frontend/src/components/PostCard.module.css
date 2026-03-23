@@ -1,8 +1,17 @@
 .card {
+  display: block;
   border: 1px solid #eee;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  border-color: #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .cardImage {
@@ -13,11 +22,6 @@
 
 .cardBody {
   padding: 1.25rem;
-}
-
-.cardTitleLink {
-  text-decoration: none;
-  color: #111;
 }
 
 .cardTitle {

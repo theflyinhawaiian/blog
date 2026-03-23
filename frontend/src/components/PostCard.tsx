@@ -11,19 +11,19 @@ export function PostCard({ post }: Props) {
   const image = post.post_image?.Valid ? post.post_image.String : ''
 
   return (
-    <article className={styles.card}>
-      {image && (
-        <img src={image} alt={post.title} className={styles.cardImage} />
-      )}
-      <div className={styles.cardBody}>
-        <Link to={`/posts/${post.slug}`} className={styles.cardTitleLink}>
+    <Link to={`/posts/${post.slug}`} className={styles.card}>
+      <article>
+        {image && (
+          <img src={image} alt={post.title} className={styles.cardImage} />
+        )}
+        <div className={styles.cardBody}>
           <h2 className={styles.cardTitle}>{post.title}</h2>
-        </Link>
-        {excerpt && <p className={styles.cardExcerpt}>{excerpt}</p>}
-        <time className={styles.cardDate}>
-          {new Date(post.created_at).toLocaleDateString()}
-        </time>
-      </div>
-    </article>
+          {excerpt && <p className={styles.cardExcerpt}>{excerpt}</p>}
+          <time className={styles.cardDate}>
+            {new Date(post.created_at).toLocaleDateString()}
+          </time>
+        </div>
+      </article>
+    </Link>
   )
 }
