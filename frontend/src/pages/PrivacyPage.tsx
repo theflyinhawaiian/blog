@@ -9,11 +9,13 @@ export function PrivacyPage() {
   const { user, deleteAccount } = useAuth()
   const navigate = useNavigate()
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [deleted, setDeleted] = useState(false)
 
   async function handleDeleteAccount() {
     await deleteAccount()
     setConfirmOpen(false)
-    navigate('/')
+    setDeleted(true)
+    setTimeout(() => navigate('/'), 3000)
   }
 
   return (
@@ -29,7 +31,13 @@ export function PrivacyPage() {
 
         <p>I will never sell or share your data with third parties. Data is used solely to operate this blog.</p>
 
-        {user && (
+        {deleted && (
+          <div className={styles.successNotice}>
+            Your account has been deleted. Redirecting you home...
+          </div>
+        )}
+
+        {user && !deleted && (
           <div className={styles.deleteSection}>
             <h2>Delete Your Data</h2>
             

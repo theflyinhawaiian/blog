@@ -14,6 +14,15 @@
   color: #333;
 }
 
+.successNotice {
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  background: #e6f4ea;
+  border: 1px solid #34a853;
+  border-radius: 6px;
+  color: #1e7e34;
+}
+
 .deleteSection {
   margin-top: 3rem;
   padding-top: 2rem;
