@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { FaFacebook, FaXTwitter, FaLinkedin, FaEnvelope, FaLink, FaCheck } from 'react-icons/fa6'
 import styles from './ShareSection.module.css'
 
 interface Props {
@@ -27,17 +28,19 @@ export function ShareSection({ url, title }: Props) {
         rel="noopener noreferrer"
         className={styles.shareLink}
         style={{ background: '#1877f2' }}
+        aria-label="Share on Facebook"
       >
-        Facebook
+        <FaFacebook />
       </a>
       <a
         href={`https://twitter.com/intent/tweet?url=${encoded}&text=${encodedTitle}`}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.shareLink}
-        style={{ background: '#1da1f2' }}
+        style={{ background: '#000' }}
+        aria-label="Share on X"
       >
-        Twitter
+        <FaXTwitter />
       </a>
       <a
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encoded}`}
@@ -45,18 +48,20 @@ export function ShareSection({ url, title }: Props) {
         rel="noopener noreferrer"
         className={styles.shareLink}
         style={{ background: '#0077b5' }}
+        aria-label="Share on LinkedIn"
       >
-        LinkedIn
+        <FaLinkedin />
       </a>
       <a
         href={`mailto:?subject=${encodedTitle}&body=${encoded}`}
         className={styles.shareLink}
         style={{ background: '#555' }}
+        aria-label="Share via email"
       >
-        Email
+        <FaEnvelope />
       </a>
-      <button onClick={copyLink} className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`}>
-        {copied ? 'Copied!' : 'Copy link'}
+      <button onClick={copyLink} className={`${styles.copyBtn} ${copied ? styles.copyBtnSuccess : ''}`} aria-label={copied ? 'Copied' : 'Copy link'}>
+        {copied ? <FaCheck /> : <FaLink />}
       </button>
     </div>
   )
