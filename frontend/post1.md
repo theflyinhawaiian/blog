@@ -1,0 +1,79 @@
+
+I'm having a tough day; Today marks the seventh anniversary of Arya's gotcha day. Today is also just over a month since I lost her. I've been writing random things over the last month in an effort to vent my emotions, and I just kinda wanna put my ramblings out there. I'mma give you advance warning, this is mostly just trauma dumping and reminiscing.
+# The beginning
+
+![baby girl.](https://pm-blog-bucket.s3.us-east-1.amazonaws.com/baby_arya.jpeg)
+
+This was the first picture I ever saw of my dog. It was one of those classic moments that you hear about where I saw her and just _knew_ she would be mine. I'd visited loads of shelters, was constantly looking around online. At no moment before this point did I feel like I'd found my dog. But then, there was this picture. I didn't know the odds of the foster group approving my adoption request, but I felt like better than one in a billion when they did. I'd been planning on getting a dog for months. I'd consumed an _unhinged_ amount of content around training dogs, I had prepped the house for her arrival, and the day before I brought her home, I was too excited to fall asleep.
+
+I remember within thirty seconds of getting into the house for the first time, she peed on the carpet. I remember panicking the first time I found a tick on her. I remember through the first months, cuddled up with the pup at night, and how it sucked to put her in the crate at the end of the night but also being desperately afraid of giving her attachment issues. I remember how, on our first ever walk, she got scared of a neighbor's dog, jumped up into my arms... and peed.
+
+Along the way, she grew in and out of a bunch of adorable habits. I would fall back onto my bed and she'd reflexively jump up to join me. I'd take a hockey stick and stickhandle around the house, and she'd lose her mind chasing the ball around. One of my favorites was chasing her around the dining room table. It was the most reliable way to get her to bark, which people never believed she actually did because she was so quiet.
+
+Maybe more than anything else, some of my favorite memories of Arya were of taking her to the park. She was still a pup during that weird 2020 summer, and it was pretty much the only thing to do where we could be outside of the house. I loved watching her play at the park, especially in those early years. For the first couple of years (and maybe almost all the way until the end), she was the fastest dog in the park when she wanted to be. It would take some kind of stimulus to make her take off, like two dogs chasing one another next to her, but once she was off, she ran purely just to run, and she ran like lightning. Invariably, someone new at the park would always marvel at her speed.
+
+She was an absolute monster wrestler, too. She had several friends that, when they rolled up to the park, I knew I'd have a totally exhausted dog that night. She and her friends would wrestle so roughly! I remember feeling awkward and thinking I probably made some park newbies uncomfortable with the way Arya wrestled with dogs she knew well. Every once in a while someone new would nervously point out Arya and her wrestling partner and would ask if they should be broken up, and we'd laugh and say they were fine. Whenever she made a new friend, I would always warn them that she liked to play rough. Despite that, she never really had a bad interaction with other dogs or their owners at the park.
+
+My favorite quality of Arya was just how chill she was. She would accept pretty much whatever situation I put her in. I have a nearly uncountable number of pictures where I would drape a shirt over her head, put a hat on her, wrap her in a pashmina so she'd look like a babushka. She would just let me do it and it was the most adorable thing.
+
+![What an absolute goof she was.](https://pm-blog-bucket.s3.us-east-1.amazonaws.com/goofball_dog.jpg)
+
+She was an almost magically sweet dog. My friends would always joke that she was more of a cat than a dog. She'd greet a new visitor, then at the first opportunity, she'd dart upstairs to lounge on my bed. Sadly, I think I fully ruined her attitude towards cats. She could always exist in the same space at them, but always shrunk away from attention from them. The only time she ever _really_ got into it with other dogs would be two _very specific_ neighborhood dogs, and I'm convinced to this day that if you put them in a fenced in area together, they'd get along just fine.
+
+I've always struggled with anxiety. From time to time, I would catch myself pre-mourning the loss of Arya. I would hug her and remind myself that one day, I wouldn't be able to do this anymore. I did it from day one, and I did it progressively more, especially when her health began to fail. I don't know why. I don't think it really helped prepare me to lose her, either. I find it difficult to not kick myself for just enjoying the time with her more when I did catch myself worrying like that.
+
+# Warning signs
+
+Looking back, I'm not sure if I can point to a first sign for you. There were small things that I had noticed and discounted along the way as odd one-off quirks that, in light of what happened, maybe were subtle indicators of things going wrong. Her teeth would sometimes chatter after I gave her a treat. She occasionally had a small, nearly imperceptible twitch above her left eye. A couple of times over the last six months, I caught her digging at the carpet at the top of the landing of my second floor. Weird stuff that wasn't at all major. The one symptom that I can tell you about for sure is when her first seizure happened.
+
+The first seizure will be burned into my head for the rest of my life. Relative to the rest of the ~25 more seizures to come, this one was average-to-bad in severity. Out of nowhere at all, Arya _just dropped_ on my bedroom floor and started violently convulsing, her mouth frothing like wild. I had never witnessed a seizure before. I knew what it was the moment I saw it, but didn't know its potential causes, didn't know if she would come out of it, didn't know if I was watching my dog die. It was extremely painful to watch.
+
+I screamed for my roommate's help (as if he would have been able to do anything at all), and moved her to the middle of my room, because some random instinct was telling me to move her away from things she could hit with her head. Ever so slowly, the convulsing started to ease, and Arya's breathing returned to normal -- exhausted and panting, but normal. She began her first post-ictal phase, which to me was just as painful to watch as the seizure itself. She wobbled around, totally uncoordinated. Her legs slipped out from under her, she walked headlong into walls, and she seemed lost and quite panicked. She wouldn't answer my calls. Watching this was a totally different type of helpless to feel.
+
+I could visibly tell when Arya mentally came to -- it took as long as the physical seizure itself, but when she came back, she was _back_. Excited and happy, as if I'd just gotten back from a weeklong trip. She jumped up and kissed my face and her tail wagged vigorously. In my panic and fear I had called the ER vet sobbing about what was happening, and as she was just returning to normal, the vet had asked me how she was doing. "Perfectly fine", I responded, both laughing and crying as Arya was finally back to being Arya. The vet's advice was to bring her in if she had two more seizures in 24 hours, or if she had another seizure lasting five or more minutes, and to meet with her normal vet as soon as possible.
+
+After speaking with my regular vet and doing a bunch of googling, I mostly tried to put the seizures out of my head. They could happen for loads of different reasons, most of which are benign in cause. Unfortunately just two weeks later, I found slobber marks in a specific area in the living room that I couldn't make heads or tails of. My blood ran cold at the thought of her having another seizure, but being completely alone when she came out of it. What if something happened to her while I wasn't there? What if I came home to her dead on my living room floor? 
+
+The second seizure I witnessed might have been the worst one. She bit her tongue right at the start of it, so on top of all of the seizing, there was blood pooling around her head. It happened so late at night, there was no one awake to talk to. All I could do was exist in my worries and my fears.  I didn't sleep that night.
+
+# The new normal
+
+The vet came back with a diagnosis of idiopathic epilepsy, which I accepted so quickly and unquestioningly, I can't really look at it in any other way other than a lie to myself that I bought hook, line, and sinker. It _definitely_ couldn't have been anything else, right? Had I left the door open to what I would come to realize was the horrible, awful truth of the situation, maybe I wouldn't have spent all this time feeling so confused, helpless, and anxious.
+
+The vet prescribed her anti-seizure meds (Keppra). She'd need to be on them for the rest of her life. Three times daily, once every eight hours. These wouldn't stop the seizures completely, they'd ideally just be less frequent and less severe when they _did_ happen. The first round of these felt like they were working like a charm for what would go on to be the shortest-feeling "normal" month that Arya would ever have again.
+
+The resumption of the seizures kicked off a fairly regular routine for the next handful of months; Two weeks seizure free, then a seizure. I began to find myself feeling bouts of anxiety in the seizure-free periods, caused by the jingling of her tags, which was a sound that I used to welcome, knowing that she was en route to say hi, ask for attention/pets, or maybe she heard me open up a cheese stick (her favorite people food snack that I was willing to let her eat) and was hoping for a piece. 
+
+Unfortunately, the jingling of the tags would now sometimes now be the herald of another horrible episode. When I would hear the jingling, I would freeze and stop _everything_ I was doing. If I didn't hear it come closer or go farther after a second, I would leap into action. Sometimes, she was just scratching herself. Other times, it was a seizure.
+
+As time passed on, one seizure every two weeks became two seizures, the seizures being separated by a handful of uneasy hours. As more time passed, two seizures became three, separated by ~28 hours total from first to third. Eventually, we crossed the threshold into cluster seizure territory. After an ER visit, she was prescribed Phenobarbital, which she was to take alongside the keppra. 
+
+Here's a picture was taken in those last couple of weeks. It's the last one I have of me and Arya together.
+
+![Forever the cutest.](https://pm-blog-bucket.s3.us-east-1.amazonaws.com/pete_n_arya.jpg)
+
+Heartbreakingly, she was never really the same after starting the phenobarbital. The new drugs took her out of it so heavily, and looking back, there were clear symptoms that she exhibited that the doctors and myself attributed to the drugs that indicated that her condition was worsening. She would lose coordination at times, and her hind legs weakened to the point where, in the last two weeks of her life, I started needing to help her up the stairs with regularity.
+
+# The end.
+
+I knew the deal at the beginning. Maybe I didn't fully appreciate it, but I knew that, barring an improbable, untimely end of my own, that a day would come where I would have to say goodbye to Arya and come to terms with her passing. What I didn't know was how soon, or how sudden it would be. In my head, I had a good 5-7 more years with her. When I woke up on Thursday, March 26, took her out to potty, and gave her her morning meds, I had no idea that this would be our last hour together. I was so very unprepared for what was about to happen.
+
+In what I can only describe as both a blessing and a curse, I was with Arya when she experienced the medical event that ended her life. At first I thought she was suffering a different type of seizure, but my gut told me this was something totally different. I called the ER vet (we had literally just been there for an episode that was somewhat similar to this, but she was discharged just a handful of hours previously), and explained what I was seeing while she started to go rigid, and her breathing started coming out shallow, and occasionally, in rasps. They told me to get there ASAP.
+
+I picked her up and _flew_ outside. In my rush, I would come to find out later that I left my front door wide open. The thirty minutes it took to get to the ER was the most excruciatingly painful thirty minutes of my life. I held my hand against her chest, feeling her heartbeat, her occasional heaves of breath. I have never felt so helpless, sitting in shitty Ft Pitt tunnel traffic, wanting nothing more than to scream, to will the cars stuck in the logjam out of the way. I considered flying down the shoulder. Part of me is still kicking myself that I didn't do more. Most of me knows that this flight to the ER was an exercise in futility. I'm not sure anything will ever convince me fully, however. 
+
+In the end, when I felt her heart stop, mere minutes away from the ER, I felt a sick wave of nausea. My head knew it was over, but I couldn't help but think this was all some awful, terrible dream. Sprinting into the ER with her lifeless body in my arms was the absolute worst experience I've ever had in my entire life.
+
+# What comes after
+
+I think I may have been dealt some type of odd, cosmic kindness in Arya's passing. There was no way that I would have ever have chosen to part with her the way I did. My options, given to me by the ER vet the night before she passed, were to admit her ($3-5k) and have a CT scan done (~$7k), or for her to go home. The CT scan would, inevitably, have shown me the brain tumor that ended her life. 
+
+I would have then been given the treatment options to prolong her life another X amount of months, in which her quality of life would have gotten progressively worse. I would have had to make the horrible decision of deciding _when_ to say goodbye to my baby girl. After talking with several close friends, I know that would not have been an option I'd have wanted. It wouldn't have been better, it wouldn't have been worse, it just would have been different.
+
+And so it was that life ripped me from my dear baby girl. The days that followed were so brutally tough. The absolute silence in my house when I arrived home. The toys that I never saw her touch but were always randomly rearranged around the house, now laying motionless until I decide to move them myself. Many times, I've caught myself standing up from my desk, ready to hunt down my dog, pick her up, and lay her down on my chest as I lay on the couch for a quick afternoon siesta. In this times, I've more or less repeated the process without her, letting out a good long sigh, wishing I could cry, but for whatever reason, the tears not coming.
+
+Like any other grieving process, I've had my good days and my bad days. Today is a bad one. Hopefully tomorrow will be better. I can tell you that I'm absolutely better than I was the day after, and for now, I need to be happy with taking things a day at a time.
+
+If you've read this far, thank you. I've found the process of writing this out to be fairly cathartic. The tears I have trouble summoning at random points have come easily when typing this. If you've got a lil furry loved one, give them a hug for me. For now, I'll leave you with another on of my favorite pictures of me and my baby girl.
+
+![Backpack doggo <3](https://pm-blog-bucket.s3.us-east-1.amazonaws.com/backpack_dog.jpg)
